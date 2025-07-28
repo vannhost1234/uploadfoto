@@ -1,40 +1,29 @@
 const axios = require('axios');
 
-module.exports = function (app) {
-  app.get('/pterodactyl/delete', async (req, res) => {
-    const { idserver, domain, ptla, ptlc, apikey } = req.query;
+module.exports = function(app) {
+    app.get('/pterodactyl/delete', async (req, res) => {
+        const { apikey, idserver, domain, ptla, ptlc } = req.query;
 
-    if (!global.apikey.includes(apikey)) return res.json({ success: false, message: "Invalid API key" });
+        if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
 
-    if (!idserver || !ptla || !ptlc) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required parameters'
-      });
-    }
-
-    try {
-      const url = `${ptla}/api/application/servers/${idserver}`;
-      await axios.delete(url, {
-        headers: {
-          'Authorization': `Bearer ${ptlc}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+        if (!idserver || !domain || !ptla || !ptlc) {
+            return res.json({ status: false, error: 'Missing parameters' });
         }
-      });
 
-      return res.status(200).json({
-        success: true,
-        message: `Server dengan ID ${idserver} berhasil dihapus.`
-      });
+        try {
+            await axios.delete(`${ptla}/api/application/servers/${idserver}`, {
+                headers: {
+                    'Authorization': `Bearer ${ptlc}`,
+                    'Accept': 'application/json'
+                }
+            });
 
-    } catch (error) {
-      const errMsg = error?.response?.data || error.message;
-      return res.status(500).json({
-        success: false,
-        message: 'Gagal menghapus server.',
-        error: errMsg
-      });
-    }
-  });
+            res.status(200).json({
+                status: true,
+                message: `Server with ID ${idserver} on ${domain} has been deleted.`
+            });
+        } catch (error) {
+            res.status(500).json({ status: false, error: error?.response?.data || error.message });
+        }
+    });
 };
