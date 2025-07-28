@@ -1,29 +1,30 @@
 const axios = require('axios');
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.get('/pterodactyl/delete', async (req, res) => {
-        const { apikey, idserver, domain, ptla, ptlc } = req.query;
+        const { idserver, domain, ptla } = req.query;
 
-        if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
-
-        if (!idserver || !domain || !ptla || !ptlc) {
-            return res.json({ status: false, error: 'Missing parameters' });
+        if (!idserver || !domain || !ptla) {
+            return res.json({ status: false, message: 'Parameter idserver, domain, dan ptla wajib diisi.' });
         }
 
         try {
-            await axios.delete(`${ptla}/api/application/servers/${idserver}`, {
+            await axios.delete(`https://${domain}/api/application/servers/${idserver}`, {
                 headers: {
-                    'Authorization': `Bearer ${ptlc}`,
-                    'Accept': 'application/json'
+                    'Authorization': `Bearer ${ptla}`,
+                    'Accept': 'Application/vnd.pterodactyl.v1+json'
                 }
             });
 
-            res.status(200).json({
+            res.json({
                 status: true,
-                message: `Server with ID ${idserver} on ${domain} has been deleted.`
+                message: 'Panel berhasil dihapus.'
             });
         } catch (error) {
-            res.status(500).json({ status: false, error: error?.response?.data || error.message });
+            res.status(500).json({
+                status: false,
+                error: error.response?.data || error.message
+            });
         }
     });
 };

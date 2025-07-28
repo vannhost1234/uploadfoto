@@ -1,28 +1,23 @@
 const axios = require('axios');
-const crypto = require("crypto");
 
-function generateTransactionId() {
-    return `VANN HOSTING -${crypto.randomBytes(2).toString('hex').toUpperCase()}`;
-}
-
-module.exports = function(app) {
+module.exports = function (app) {
     app.get('/pterodactyl/create', async (req, res) => {
-        const { apikey, username, ram, disk, cpu, eggid, nestid, loc, domain, ptla, ptlc } = req.query;
-
-        if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
+        const { username, ram, disk, cpu, eggid, nestid, loc, domain, ptla, ptlc } = req.query;
 
         if (!username || !ram || !disk || !cpu || !eggid || !nestid || !loc || !domain || !ptla || !ptlc) {
-            return res.json({ status: false, error: 'Missing required parameters' });
+            return res.json({ status: false, message: 'Parameter tidak lengkap.' });
         }
 
         try {
-            const response = await axios.post(`${ptla}/api/application/servers`, {
+            const response = await axios.post(`https://${domain}/api/application/servers`, {
                 name: username,
                 user: 1,
                 egg: parseInt(eggid),
                 docker_image: "ghcr.io/parkervcp/yolks:nodejs_18",
                 startup: "npm start",
-                environment: {},
+                environment: {
+                    USERNAME: username
+                },
                 limits: {
                     memory: parseInt(ram),
                     swap: 0,
@@ -31,31 +26,37 @@ module.exports = function(app) {
                     cpu: parseInt(cpu)
                 },
                 feature_limits: {
-                    databases: 1,
-                    allocations: 1,
-                    backups: 1
+                    databases: 0,
+                    backups: 0,
+                    allocations: 1
+                },
+                allocation: {
+                    default: 1
                 },
                 deploy: {
                     locations: [parseInt(loc)],
                     dedicated_ip: false,
                     port_range: []
                 },
-                start_on_completion: true,
-                nest: parseInt(nestid)
+                start_on_completion: true
             }, {
                 headers: {
-                    'Authorization': `Bearer ${ptlc}`,
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Authorization': `Bearer ${ptla}`,
+                    'Accept': 'Application/vnd.pterodactyl.v1+json'
                 }
             });
 
-            res.status(200).json({
+            res.json({
                 status: true,
-                result: response.data
+                message: 'Panel berhasil dibuat.',
+                data: response.data
             });
         } catch (error) {
-            res.status(500).json({ status: false, error: error?.response?.data || error.message });
+            res.status(500).json({
+                status: false,
+                error: error.response?.data || error.message
+            });
         }
     });
 };
