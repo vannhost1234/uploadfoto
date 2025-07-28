@@ -15,12 +15,12 @@ export default async function handler(req, res) {
       `${ptla}/api/application/servers`,
       {
         name: username,
-        user: parseInt(ptlc),
+        user: 1, // Ganti sesuai ID user di panel
         egg: parseInt(eggid),
-        docker_image: "ghcr.io/pterodactyl/yolks:nodejs_18", // Contoh, sesuaikan
+        docker_image: "ghcr.io/pterodactyl/yolks:nodejs_18",
         startup: "npm start",
         environment: {
-          // bisa disesuaikan berdasarkan egg
+          STARTUP_CMD: "npm start"
         },
         limits: {
           memory: parseInt(ram),
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
       },
       {
         headers: {
-          'Authorization': `Bearer ${domain}`, // API key Pterodactyl
+          'Authorization': `Bearer ${ptlc}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }
@@ -55,14 +55,14 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: 'Server created successfully',
+      message: "Server created successfully!",
       data: createServer.data
     });
-
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       success: false,
-      message: err.response?.data || err.message
+      message: "Failed to create server",
+      error: error.response?.data || error.message
     });
   }
 }

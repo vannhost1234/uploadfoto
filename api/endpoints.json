@@ -39,6 +39,18 @@
       "desc": "Create Panel Pterodactyl",
       "status": "Active",
       "path": "/pterodactyl/create?username=&ram=&disk=&cpu=&eggid=&nestid=&loc=&domain=&ptla=&ptlc="
+    },
+    {
+      "name": "List Panel",
+      "desc": "List Panel Pterodactyl",
+      "status": "Active",
+      "path": "/pterodactyl/listpanel?eggid=&nestid=&loc=&domain=&ptla=&ptlc="
+    },
+    {
+      "name": "Delete Panel",
+      "desc": "Delete Panel Pterodactyl",
+      "status": "Active",
+      "path": "/pterodactyl/delete?idserver=&domain=&ptla="
     }
   ],
   "downloader": [
