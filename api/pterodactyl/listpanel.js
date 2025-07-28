@@ -1,37 +1,81 @@
-const axios = require('axios');
+const fetch = require('node-fetch');
 
 module.exports = function (app) {
-    app.get('/pterodactyl/listpanel', async (req, res) => {
-        const { domain, ptla } = req.query;
+  app.get('/pterodactyl/listpanel', async (req, res) => {
+    const { apikey, eggid, nestid, loc, domain, ptla } = req.query;
 
-        if (!domain || !ptla) {
-            return res.json({ status: false, message: 'Parameter domain dan ptla wajib diisi.' });
-        }
+    // Validasi API Key
+    if (!global.apikey || !global.apikey.includes(apikey)) {
+      return res.status(403).json({ status: false, error: 'Apikey invalid' });
+    }
 
-        try {
-            const response = await axios.get(`https://${domain}/api/application/servers`, {
-                headers: {
-                    'Authorization': `Bearer ${ptla}`,
-                    'Accept': 'Application/vnd.pterodactyl.v1+json'
-                }
-            });
+    if (!domain || !ptla) {
+      return res.status(400).json({
+        status: false,
+        error: 'Parameter wajib: domain & ptla'
+      });
+    }
 
-            const list = response.data.data.map(server => ({
-                id: server.attributes.id,
-                name: server.attributes.name,
-                uuid: server.attributes.uuidShort,
-                created_at: server.attributes.created_at
-            }));
+    const headers = {
+      Authorization: `Bearer ${ptla}`,
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
 
-            res.json({
-                status: true,
-                result: list
-            });
-        } catch (error) {
-            res.status(500).json({
-                status: false,
-                error: error.response?.data || error.message
-            });
-        }
-    });
+    try {
+      const url = `${domain}/api/application/servers`;
+
+      const response = await fetch(url, { headers });
+
+      // Tambahkan pengecekan status response
+      if (!response.ok) {
+        const errorText = await response.text();
+        return res.status(response.status).json({
+          status: false,
+          error: `Gagal mengambil data dari panel: ${response.statusText}`,
+          detail: errorText
+        });
+      }
+
+      const data = await response.json();
+
+      if (!data || !Array.isArray(data.data)) {
+        return res.status(500).json({
+          status: false,
+          error: "Respon tidak sesuai format yang diharapkan",
+          detail: data
+        });
+      }
+
+      const filtered = data.data.filter(server => {
+        const attr = server.attributes;
+        return (!nestid || attr.nest === parseInt(nestid)) &&
+               (!eggid || attr.egg === parseInt(eggid)) &&
+               (!loc || attr.location === parseInt(loc));
+      });
+
+      const result = filtered.map(srv => ({
+        id: srv.attributes.id,
+        name: srv.attributes.name,
+        uuid: srv.attributes.uuid,
+        identifier: srv.attributes.identifier,
+        user: srv.attributes.user,
+        limits: srv.attributes.limits,
+        created_at: srv.attributes.created_at
+      }));
+
+      return res.status(200).json({
+        status: true,
+        total: result.length,
+        servers: result
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        status: false,
+        error: "Terjadi kesalahan saat mengambil list panel",
+        detail: err.message
+      });
+    }
+  });
 };

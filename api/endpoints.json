@@ -33,24 +33,36 @@
       "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut="
     }
   ],
-  "pterodactyl": [
+  "Pterodactyl": [
     {
       "name": "Create Panel",
-      "desc": "Create Panel Pterodactyl",
+      "desc": "Create Akun Dan Server Pterodactyl",
       "status": "Active",
-      "path": "/pterodactyl/create?username=&ram=&disk=&cpu=&eggid=&nestid=&loc=&domain=&ptla=&ptlc="
+      "path": "/pterodactyl/create?apikey=&username=&ram=&eggid=&nestid=&loc=&domain=&ptla="
     },
     {
       "name": "List Panel",
-      "desc": "List Panel Pterodactyl",
+      "desc": "List Akun Pterodactyl",
       "status": "Active",
-      "path": "/pterodactyl/listpanel?eggid=&nestid=&loc=&domain=&ptla=&ptlc="
+      "path": "/pterodactyl/listpanel?apikey=&eggid=&nestid=&loc=&domain=&ptla="
     },
     {
-      "name": "Delete Panel",
-      "desc": "Delete Panel Pterodactyl",
+      "name": "Delete Server",
+      "desc": "Delete Server Pterodactyl",
       "status": "Active",
-      "path": "/pterodactyl/delete?idserver=&domain=&ptla="
+      "path": "/pterodactyl/deleteserver?apikey=&idserver=&domain=&ptla="
+    },
+    {
+      "name": "Create Admin Panel",
+      "desc": "Create Admin Pterodactyl",
+      "status": "Active",
+      "path": "/pterodactyl/createadmin?apikey=&username=&domain=&ptla="
+    },
+    {
+      "name": "Delete User Panel",
+      "desc": "Delete User Pterodactyl",
+      "status": "Active",
+      "path": "/pterodactyl/deleteuser?apikey=&iduser=&domain=&ptla="
     }
   ],
   "downloader": [
