@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Ambil semua server dari panel
     const response = await axios.get(`${ptla}/api/application/servers`, {
       headers: {
         'Authorization': `Bearer ${ptlc}`,
@@ -22,25 +21,21 @@ export default async function handler(req, res) {
 
     const allServers = response.data.data;
 
-    // Filter berdasarkan eggid, nestid, location, domain
-    const filteredServers = allServers.filter(server => {
-      return (
-        server.attributes.egg === parseInt(eggid) &&
-        server.attributes.nest === parseInt(nestid) &&
-        server.attributes.allocation.location_id === parseInt(loc) &&
-        server.attributes.name.toLowerCase().includes(domain.toLowerCase())
-      );
-    });
+    const filtered = allServers.filter(server =>
+      server.attributes.egg == parseInt(eggid) &&
+      server.attributes.nest == parseInt(nestid) &&
+      server.attributes.allocation?.location_id == parseInt(loc) &&
+      server.attributes.name.toLowerCase().includes(domain.toLowerCase())
+    );
 
     res.json({
       success: true,
-      count: filteredServers.length,
-      result: filteredServers.map(srv => ({
+      count: filtered.length,
+      result: filtered.map(srv => ({
         id: srv.attributes.id,
         uuid: srv.attributes.uuid,
         name: srv.attributes.name,
         user_id: srv.attributes.user,
-        limits: srv.attributes.limits,
         egg: srv.attributes.egg,
         nest: srv.attributes.nest,
         location: srv.attributes.allocation.location_id,
@@ -49,7 +44,6 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       success: false,
       message: 'Failed to fetch server list',
