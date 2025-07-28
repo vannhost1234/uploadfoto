@@ -2,12 +2,9 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
   app.get('/pterodactyl/createadmin', async (req, res) => {
-    const { apikey, username, domain, ptla } = req.query;
+    const { username, domain, ptla } = req.query;
 
-    if (!global.apikey || !global.apikey.includes(apikey)) {
-      return res.status(403).json({ status: false, error: 'Apikey invalid' });
-    }
-
+    // Validasi parameter
     if (!username || !domain || !ptla) {
       return res.status(400).json({
         status: false,
@@ -43,7 +40,7 @@ module.exports = function (app) {
 
       const json = await response.json();
 
-      if (!json?.attributes?.id) {
+      if (!response.ok || !json?.attributes?.id) {
         return res.status(500).json({
           status: false,
           error: "Gagal membuat admin",

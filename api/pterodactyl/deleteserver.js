@@ -2,12 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
   app.get('/pterodactyl/deleteserver', async (req, res) => {
-    const { apikey, idserver, domain, ptla } = req.query;
-
-    // Validasi API Key
-    if (!global.apikey || !global.apikey.includes(apikey)) {
-      return res.status(403).json({ status: false, error: 'Apikey invalid' });
-    }
+    const { idserver, domain, ptla } = req.query;
 
     // Validasi Parameter
     if (!idserver || !domain || !ptla) {

@@ -2,12 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
   app.get('/pterodactyl/deleteuser', async (req, res) => {
-    const { apikey, iduser, domain, ptla } = req.query;
-
-    // Validasi API Key
-    if (!global.apikey || !global.apikey.includes(apikey)) {
-      return res.status(403).json({ status: false, error: 'Apikey invalid' });
-    }
+    const { iduser, domain, ptla } = req.query;
 
     // Validasi Parameter
     if (!iduser || !domain || !ptla) {
@@ -30,7 +25,6 @@ module.exports = function (app) {
       });
 
       if (response.status === 204) {
-        // User berhasil dihapus
         return res.status(200).json({
           status: true,
           message: `User ID ${iduser} berhasil dihapus.`

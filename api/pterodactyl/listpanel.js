@@ -2,12 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
   app.get('/pterodactyl/listpanel', async (req, res) => {
-    const { apikey, eggid, nestid, loc, domain, ptla } = req.query;
-
-    // Validasi API Key
-    if (!global.apikey || !global.apikey.includes(apikey)) {
-      return res.status(403).json({ status: false, error: 'Apikey invalid' });
-    }
+    const { eggid, nestid, loc, domain, ptla } = req.query;
 
     if (!domain || !ptla) {
       return res.status(400).json({
@@ -27,7 +22,6 @@ module.exports = function (app) {
 
       const response = await fetch(url, { headers });
 
-      // Tambahkan pengecekan status response
       if (!response.ok) {
         const errorText = await response.text();
         return res.status(response.status).json({
@@ -47,6 +41,7 @@ module.exports = function (app) {
         });
       }
 
+      // Filter server berdasarkan parameter opsional
       const filtered = data.data.filter(server => {
         const attr = server.attributes;
         return (!nestid || attr.nest === parseInt(nestid)) &&

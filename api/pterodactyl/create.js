@@ -2,12 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
   app.get('/pterodactyl/create', async (req, res) => {
-    const { apikey, username, ram, eggid, nestid, loc, domain, ptla } = req.query;
-
-    // Validasi API Key
-    if (!global.apikey || !global.apikey.includes(apikey)) {
-      return res.status(403).json({ status: false, error: 'Apikey invalid' });
-    }
+    const { username, ram, eggid, nestid, loc, domain, ptla } = req.query;
 
     // Validasi Parameter
     if (!username || !ram || !eggid || !nestid || !loc || !domain || !ptla) {
@@ -44,12 +39,12 @@ module.exports = function (app) {
     };
 
     try {
-      // 1. Create User
+      // 1. Buat user
       const userPayload = {
         email,
         username: username.toLowerCase(),
         first_name: username,
-        last_name: "Skyzee",
+        last_name: "VannHost",
         password,
         language: "en"
       };
@@ -71,7 +66,7 @@ module.exports = function (app) {
 
       const userId = userJson.attributes.id;
 
-      // 2. Get Egg Info
+      // 2. Ambil data egg
       const eggRes = await fetch(`${domain}/api/application/nests/${nestid}/eggs/${eggid}`, { headers });
       const eggJson = await eggRes.json();
 
@@ -86,7 +81,7 @@ module.exports = function (app) {
       const startup = eggJson.attributes.startup || "npm start";
       const docker = eggJson.attributes.docker_image || "ghcr.io/parkervcp/yolks:nodejs_21";
 
-      // 3. Create Server
+      // 3. Buat server
       const serverPayload = {
         name,
         user: userId,
@@ -106,9 +101,7 @@ module.exports = function (app) {
           allocations: 1
         },
         environment: {
-          INST: "npm",
-          USER_UPLOAD: "0",
-          AUTO_UPDATE: "0",
+          ...eggJson.attributes.default_environment,
           CMD_RUN: "npm start"
         },
         deploy: {
