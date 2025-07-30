@@ -33,7 +33,7 @@
       "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut="
     }
   ],
-  "Pterodactyl": [
+  "pterodactyl": [
     {
       "name": "Create Panel",
       "desc": "Create Akun Dan Server Pterodactyl",
