@@ -2,117 +2,126 @@ const axios = require('axios');
 const FormData = require('form-data');
 const { fromBuffer } = require('file-type');
 const qs = require('qs');
-const https = require('https');
 
-// Fungsi bantu untuk ambil buffer dari URL
-async function getBuffer(url) {
-    const res = await axios.get(url, { responseType: 'arraybuffer' });
-    return Buffer.from(res.data, 'binary');
-}
-
-const tool = ['removebg', 'enhance', 'upscale', 'restore', 'colorize'];
+const tool = [ 'removebg', 'enhance', 'upscale', 'restore', 'colorize' ];
 
 const pxpic = {
-    upload: async (buffer) => {
-        const { ext, mime } = (await fromBuffer(buffer)) || {};
-        const fileName = `${Date.now()}.${ext}`;
-        const folder = "uploads";
+ upload: async (filePath) => {
+  const buffer = filePath
+  const { ext, mime } = (await fromBuffer(buffer)) || {};
+  const fileName = Date.now() + "." + ext;
 
-        const signed = await axios.post("https://pxpic.com/getSignedUrl", { folder, fileName }, {
-            headers: { "Content-Type": "application/json" },
-        });
-
-        const { presignedUrl } = signed.data;
-
-        await axios.put(presignedUrl, buffer, {
-            headers: { "Content-Type": mime }
-        });
-
-        const cdnDomain = "https://files.fotoenhancer.com/uploads/";
-        return cdnDomain + fileName;
+  const folder = "uploads";
+  const responsej = await axios.post("https://pxpic.com/getSignedUrl", { folder, fileName }, {
+    headers: {
+      "Content-Type": "application/json",
     },
+  });
 
-    create: async (buffer, tools) => {
-        if (!tool.includes(tools)) {
-            throw new Error(`Pilih salah satu dari tools ini: ${tool.join(', ')}`);
-        }
+  const { presignedUrl } = responsej.data;
 
-        const imageUrl = await pxpic.upload(buffer);
+  await axios.put(presignedUrl, buffer, {
+    headers: {
+      "Content-Type": mime,
+    },
+  });
 
-        const data = qs.stringify({
-            imageUrl,
-            targetFormat: 'png',
-            needCompress: 'no',
-            imageQuality: '100',
-            compressLevel: '6',
-            fileOriginalExtension: 'png',
-            aiFunction: tools,
-            upscalingLevel: ''
-        });
+  const cdnDomain = "https://files.fotoenhancer.com/uploads/";
+  const sourceFileUrl = cdnDomain + fileName;
 
-        const response = await axios.post('https://pxpic.com/callAiFunction', data, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept-Language': 'id-ID'
-            }
-        });
-
-        return response.data;
+  return sourceFileUrl;
+  },
+  create: async (filePath, tools) => {
+    if (!tool.includes(tools)) { 
+        return `Pilih salah satu dari tools ini: ${tool.join(', ')}`; 
     }
-};
+    const url = await pxpic.upload(filePath);
+    let data = qs.stringify({
+      'imageUrl': url,
+      'targetFormat': 'png',
+      'needCompress': 'no',
+      'imageQuality': '100',
+      'compressLevel': '6',
+      'fileOriginalExtension': 'png',
+      'aiFunction': tools,
+      'upscalingLevel': ''
+    });
 
-module.exports = function (app) {
+    let config = {
+      method: 'POST',
+      url: 'https://pxpic.com/callAiFunction',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Android 10; Mobile; rv:131.0) Gecko/131.0 Firefox/131.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'accept-language': 'id-ID'
+      },
+      data: data
+    };
 
-    app.get('/imagecreator/removebg', async (req, res) => {
-        const { url } = req.query;
-        if (!url) return res.status(400).json({ status: false, error: 'URL gambar wajib diisi.' });
+    const api = await axios.request(config);
+    return api.data;
+  }
+}
 
+module.exports = function(app) {
+app.get('/imagecreator/removebg', async (req, res) => {
+       const { apikey, url } = req.query
+       if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
         try {
-            const buffer = await getBuffer(url);
-            const result = await pxpic.create(buffer, 'removebg');
-            res.status(200).json({ status: true, result: result.resultImageUrl });
+            let image = await getBuffer(url)
+            const result = await pxpic.create(image, "removebg")
+            res.status(200).json({
+                status: true,
+                result: result.resultImageUrl
+            });
         } catch (error) {
             res.status(500).send(`Error: ${error.message}`);
         }
-    });
+});
 
-    app.get('/imagecreator/remini', async (req, res) => {
-        const { url } = req.query;
-        if (!url) return res.status(400).json({ status: false, error: 'URL gambar wajib diisi.' });
-
+app.get('/imagecreator/remini', async (req, res) => {
+       const { apikey, url } = req.query
+       if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
         try {
-            const buffer = await getBuffer(url);
-            const result = await pxpic.create(buffer, 'enhance');
-            res.status(200).json({ status: true, result: result.resultImageUrl });
+            let image = await getBuffer(url)
+            const result = await pxpic.create(image, "enhance")
+            res.status(200).json({
+                status: true,
+                result: result.resultImageUrl
+            });
         } catch (error) {
             res.status(500).send(`Error: ${error.message}`);
         }
-    });
+});
 
-    app.get('/imagecreator/upscale', async (req, res) => {
-        const { url } = req.query;
-        if (!url) return res.status(400).json({ status: false, error: 'URL gambar wajib diisi.' });
-
+app.get('/imagecreator/upscale', async (req, res) => {
+       const { apikey, url } = req.query
+       if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
         try {
-            const buffer = await getBuffer(url);
-            const result = await pxpic.create(buffer, 'upscale');
-            res.status(200).json({ status: true, result: result.resultImageUrl });
+            let image = await getBuffer(url)
+            const result = await pxpic.create(image, "upscale")
+            res.status(200).json({
+                status: true,
+                result: result.resultImageUrl
+            });
         } catch (error) {
             res.status(500).send(`Error: ${error.message}`);
         }
-    });
+});
 
-    app.get('/imagecreator/colorize', async (req, res) => {
-        const { url } = req.query;
-        if (!url) return res.status(400).json({ status: false, error: 'URL gambar wajib diisi.' });
-
+app.get('/imagecreator/colorize', async (req, res) => {
+       const { apikey, url } = req.query
+       if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
         try {
-            const buffer = await getBuffer(url);
-            const result = await pxpic.create(buffer, 'colorize');
-            res.status(200).json({ status: true, result: result.resultImageUrl });
+            let image = await getBuffer(url)
+            const result = await pxpic.create(image, "colorize")
+            res.status(200).json({
+                status: true,
+                result: result.resultImageUrl
+            });
         } catch (error) {
             res.status(500).send(`Error: ${error.message}`);
         }
-    });
-};
+});
+}

@@ -3,7 +3,7 @@ const qs = require('qs');
 const cheerio = require('cheerio');
 
 async function snackvideo(url) {
-  const data = qs.stringify({
+  let data = qs.stringify({
     'ic-request': 'true',
     'id': url,
     'locale': 'id',
@@ -16,21 +16,28 @@ async function snackvideo(url) {
     '_method': 'POST'
   });
 
-  const config = {
+  let config = {
     method: 'POST',
     url: 'https://getsnackvideo.com/results',
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Linux; Android 8.1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
+      'User-Agent': 'Mozilla/5.0 (Linux; Android 8.1.0; CPH1803; Build/OPM1.171019.026) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.4280.141 Mobile Safari/537.36 KiToBrowser/124.0',
       'Accept': 'text/html-partial, */*; q=0.9',
-      'Accept-Language': 'id-ID',
-      'Referer': 'https://getsnackvideo.com/id/how-to-download-snack-video',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'X-IC-Request': 'true',
-      'X-HTTP-Method-Override': 'POST',
-      'X-Requested-With': 'XMLHttpRequest',
-      'Origin': 'https://getsnackvideo.com'
+      'accept-language': 'id-ID',
+      'referer': 'https://getsnackvideo.com/id/how-to-download-snack-video',
+      'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'x-ic-request': 'true',
+      'x-http-method-override': 'POST',
+      'x-requested-with': 'XMLHttpRequest',
+      'origin': 'https://getsnackvideo.com',
+      'alt-used': 'getsnackvideo.com',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      'priority': 'u=0',
+      'te': 'trailers',
+      'Cookie': '_ga_TBLWJYRGPZ=GS1.1.1736227224.1.1.1736227279.0.0.0; _ga=GA1.1.1194697262.1736227224'
     },
-    data
+    data: data
   };
 
   try {
@@ -38,35 +45,31 @@ async function snackvideo(url) {
     const $ = cheerio.load(response.data);
     const downloadUrl = $('.download_link.without_watermark').attr('href');
     const thumbnail = $('.img_thumb img').attr('src');
-
     return {
-      thumbnail: thumbnail || null,
-      downloadUrl: downloadUrl || null
+      thumbnail: thumbnail || 'Thumbnail not found',
+      downloadUrl: downloadUrl || 'Download URL not found'
     };
   } catch (error) {
-    throw new Error('Gagal mengambil data SnackVideo: ' + error.message);
+    console.error('Error:', error);
   }
 }
 
 module.exports = function (app) {
-  app.get('/download/snackvideo', async (req, res) => {
-    const { url } = req.query;
-    if (!url) {
-      return res.status(400).json({ status: false, error: 'Parameter url wajib diisi.' });
-    }
-
-    try {
-      const results = await snackvideo(url);
-      if (!results.downloadUrl) {
-        return res.status(404).json({ status: false, error: 'Download link tidak ditemukan.' });
-      }
-
-      res.status(200).json({
-        status: true,
-        result: results
-      });
-    } catch (error) {
-      res.status(500).json({ status: false, error: error.message });
-    }
-  });
-};
+app.get('/download/snackvideo', async (req, res) => {
+        try {      
+        const { apikey } = req.query;
+            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
+            const { url } = req.query;
+            if (!url) {
+                return res.json({ status: false, error: 'Url is required' });
+            }
+            const results = await snackvideo(url);
+            res.status(200).json({
+                status: true,
+                result: results
+            });
+        } catch (error) {
+            res.status(500).send(`Error: ${error.message}`);
+        }
+});
+}
