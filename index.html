@@ -10,27 +10,61 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
   <style>
     /* Import Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-    /* CSS Variables for Theming */
+    /* CSS Variables for Theming (Light Mode - Default) */
     :root {
-      --primary: #FF69B4; /* Pink bubble gum */
-      --primary-dark: #FF1493;
-      --primary-light: #FFB6C1;
-      --secondary: #9370DB; /* Purple accent */
-      --tertiary: #00CED1; /* Turquoise accent */
-      --dark: #4B0082; /* Deep purple */
-      --darker: rgba(75, 0, 130, 0.9);
-      --light: #FFFFFF;
-      --bubble: rgba(255, 255, 255, 0.8);
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --card-hover: rgba(255, 182, 193, 0.5);
-      --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-      --shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-      --shadow-md: 0 12px 20px -3px rgba(0, 0, 0, 0.15), 0 6px 10px -2px rgba(0, 0, 0, 0.08);
-      --shadow-lg: 0 25px 30px -5px rgba(0, 0, 0, 0.2), 0 15px 15px -5px rgba(0, 0, 0, 0.08);
-      --bubble-gradient: radial-gradient(circle at 30% 30%, var(--primary-light), var(--primary));
+      --bg-primary: #F0F2F5; /* Light gray background */
+      --bg-secondary: #FFFFFF; /* White card/modal background */
+      --text-primary: #2C3E50; /* Dark text */
+      --text-secondary: #5D6D7E; /* Muted text */
+      --border-color: #E0E6ED; /* Light border */
+      --shadow-color: rgba(0, 0, 0, 0.1);
+
+      --primary-accent: #6C5CE7; /* Purple */
+      --primary-accent-dark: #5A4BC4;
+      --primary-accent-light: #8B7EEF;
+      --secondary-accent: #00B894; /* Green */
+      --tertiary-accent: #FD79A8; /* Pink */
+
+      --button-bg: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-dark));
+      --button-hover-bg: linear-gradient(135deg, var(--primary-accent-dark), var(--primary-accent));
+      --card-hover-border: var(--primary-accent);
+      --tab-active-bg: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-light));
+      --tab-hover-bg: rgba(108, 92, 231, 0.1); /* Light purple for hover */
+
+      --status-warning-bg: linear-gradient(135deg, #FFD700, #FFA500);
+      --status-danger-bg: linear-gradient(135deg, #FF4500, #FF0000);
+
+      --transition-speed: 0.3s;
+      --shadow-sm: 0 2px 4px var(--shadow-color);
+      --shadow: 0 6px 12px var(--shadow-color);
+      --shadow-md: 0 10px 20px var(--shadow-color);
+      --shadow-lg: 0 15px 30px var(--shadow-color);
+    }
+
+    /* Dark Mode Variables */
+    body.dark-mode {
+      --bg-primary: #1A1A2E; /* Dark blue background */
+      --bg-secondary: #2C2C4A; /* Darker card/modal background */
+      --text-primary: #E0E0E0; /* Light text */
+      --text-secondary: #B0B0B0; /* Muted light text */
+      --border-color: #4A4A6A; /* Dark border */
+      --shadow-color: rgba(0, 0, 0, 0.3);
+
+      --primary-accent: #9B59B6; /* Darker Purple */
+      --primary-accent-dark: #8E44AD;
+      --primary-accent-light: #AF7AC5;
+      --secondary-accent: #2ECC71; /* Darker Green */
+      --tertiary-accent: #E74C3C; /* Red */
+
+      --button-bg: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-dark));
+      --button-hover-bg: linear-gradient(135deg, var(--primary-accent-dark), var(--primary-accent));
+      --card-hover-border: var(--primary-accent);
+      --tab-active-bg: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-light));
+      --tab-hover-bg: rgba(155, 89, 182, 0.1); /* Dark purple for hover */
+
+      /* Status colors remain bright for visibility */
     }
 
     /* Global Reset */
@@ -42,25 +76,19 @@
 
     /* Body Styles */
     body {
-      font-family: 'Nunito', 'Comic Neue', sans-serif;
-      background-color: #FFECF5;
-      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
       padding: 1.5rem;
       min-height: 100vh;
       -webkit-tap-highlight-color: transparent;
       line-height: 1.6;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(147, 112, 219, 0.3) 0%, transparent 25%),
-        radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.2) 0%, transparent 30%);
-      background-size: 200% 200%;
-      background-position: center;
-      background-attachment: fixed;
+      transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* Overlay for background effect */
+    /* Overlay for background effect (subtle for dark mode) */
     body::before {
       content: '';
       position: fixed;
@@ -68,53 +96,34 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 236, 245, 0.95), rgba(255, 182, 193, 0.85));
+      background: radial-gradient(circle at 10% 20%, var(--primary-accent-light) 0%, transparent 20%),
+                  radial-gradient(circle at 90% 80%, var(--secondary-accent) 0%, transparent 25%),
+                  radial-gradient(circle at 50% 50%, var(--tertiary-accent) 0%, transparent 30%);
+      background-size: 200% 200%;
+      background-position: center;
+      opacity: 0.1; /* Make it subtle */
       z-index: -1;
+      transition: opacity var(--transition-speed) ease;
     }
 
-    /* Bubble Decorations */
+    /* Bubble Decorations (optional, can be removed for cleaner look) */
     .bubble {
       position: absolute;
       border-radius: 50%;
-      background: var(--bubble-gradient);
-      box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.5),
+      background: radial-gradient(circle at 30% 30%, var(--primary-accent-light), var(--primary-accent));
+      box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.1),
                   inset 5px 5px 15px rgba(0, 0, 0, 0.1),
-                  0 10px 20px rgba(0, 0, 0, 0.1);
+                  0 10px 20px var(--shadow-color);
       z-index: -1;
       animation: float 15s infinite ease-in-out;
+      opacity: 0.6;
+      transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
-    .bubble:nth-child(1) {
-      width: 120px;
-      height: 120px;
-      top: 10%;
-      left: 5%;
-      animation-delay: 0s;
-    }
-
-    .bubble:nth-child(2) {
-      width: 80px;
-      height: 80px;
-      top: 25%;
-      right: 10%;
-      animation-delay: -3s;
-    }
-
-    .bubble:nth-child(3) {
-      width: 150px;
-      height: 150px;
-      bottom: 15%;
-      left: 15%;
-      animation-delay: -5s;
-    }
-
-    .bubble:nth-child(4) {
-      width: 60px;
-      height: 60px;
-      bottom: 30%;
-      right: 20%;
-      animation-delay: -7s;
-    }
+    .bubble:nth-child(1) { width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 80px; height: 80px; top: 25%; right: 10%; animation-delay: -3s; }
+    .bubble:nth-child(3) { width: 150px; height: 150px; bottom: 15%; left: 15%; animation-delay: -5s; }
+    .bubble:nth-child(4) { width: 60px; height: 60px; bottom: 30%; right: 20%; animation-delay: -7s; }
 
     @keyframes float {
       0%, 100% { transform: translateY(0) translateX(0); }
@@ -130,7 +139,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -157,21 +166,26 @@
     }
 
     /* Header and Titles */
-    .title-container {
-      background: rgba(255, 255, 255, 0.7);
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
       padding: 1rem;
+      background: var(--bg-secondary);
       border-radius: 20px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(5px);
-      margin-bottom: 1.5rem;
-      border: 2px solid white;
-      transform: perspective(800px) rotateX(2deg);
-      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    .title-container {
+      text-align: left;
     }
 
     #apiTitle {
       font-size: 2.5rem;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -189,23 +203,44 @@
       left: 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--tertiary));
+      background: linear-gradient(90deg, var(--primary-accent), var(--tertiary-accent));
       border-radius: 2px;
     }
 
     .hero p {
       font-size: 1.1rem;
-      background: rgba(255, 255, 255, 0.8);
+      background: var(--bg-secondary);
       padding: 1rem;
       border-radius: 15px;
       box-shadow: var(--shadow-sm);
-      border: 2px solid white;
-      color: var(--dark);
-      font-weight: 600;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-weight: 500;
       max-width: 800px;
       line-height: 1.7;
-      margin: 0 auto 1.5rem auto; /* Center the paragraph */
+      margin: 0 auto 1.5rem auto;
       text-align: center;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    .theme-toggle i {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      transition: color var(--transition-speed) ease;
     }
 
     /* API Links */
@@ -218,72 +253,25 @@
     }
 
     #apiLinks a {
-      background: var(--darker);
-      border: 2px solid white;
+      background: var(--button-bg);
+      border: 1px solid var(--border-color);
       padding: 0.7rem 1.5rem;
       font-size: 1rem;
       font-weight: 700;
       border-radius: 50px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: var(--transition);
+      box-shadow: var(--shadow);
+      transition: all var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: inline-block;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      text-decoration: none; /* Remove underline */
-      color: var(--light); /* Default color for links */
-    }
-
-    #apiLinks a:nth-child(1) {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-    }
-
-    #apiLinks a:nth-child(2) {
-      background: linear-gradient(135deg, var(--tertiary), #20B2AA);
+      text-decoration: none;
+      color: white;
     }
 
     #apiLinks a:hover {
       transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    /* Stats Section (if used) */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .stats div {
-      background: rgba(255, 255, 255, 0.85);
-      border: 2px solid white;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      transform: perspective(500px) rotateY(1deg);
-      transition: var(--transition);
-      padding: 1.5rem;
-      backdrop-filter: blur(5px);
-      text-align: center;
-    }
-
-    .stats div:hover {
-      transform: perspective(500px) rotateY(-1deg) translateY(-10px);
-      box-shadow: var(--shadow-lg);
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    .stats h3 {
-      color: var(--primary-dark);
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .stats p {
-      font-size: 2rem;
-      color: var(--secondary);
-      font-weight: 800;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-md);
+      background: var(--button-hover-bg);
     }
 
     /* Tabs */
@@ -291,24 +279,24 @@
       display: flex;
       justify-content: center;
       padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.7);
+      background: var(--bg-secondary);
       border-radius: 50px;
       box-shadow: var(--shadow-sm);
-      border: 2px solid white;
+      border: 1px solid var(--border-color);
       margin-bottom: 1.5rem;
-      backdrop-filter: blur(5px);
       max-width: 100%;
       overflow-x: auto;
-      gap: 0.5rem; /* Space between tabs */
+      gap: 0.5rem;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
     .tab {
       background: transparent;
-      color: var(--dark);
-      font-weight: 700;
+      color: var(--text-primary);
+      font-weight: 600;
       padding: 0.7rem 1.8rem;
       border-radius: 50px;
-      transition: var(--transition);
+      transition: all var(--transition-speed) ease;
       font-size: 1rem;
       position: relative;
       z-index: 1;
@@ -318,13 +306,14 @@
     }
 
     .tab.active {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--tab-active-bg);
       color: white;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-sm);
     }
 
     .tab:hover:not(.active) {
-      background: rgba(255, 182, 193, 0.3);
+      background: var(--tab-hover-bg);
+      color: var(--primary-accent-dark);
     }
 
     /* API Cards */
@@ -335,37 +324,35 @@
     }
 
     .api-card {
-      background: var(--card-bg);
+      background: var(--bg-secondary);
       border-radius: 20px;
-      border: 2px solid white;
+      border: 1px solid var(--border-color);
       box-shadow: var(--shadow);
       padding: 1.5rem;
-      transition: var(--transition);
-      backdrop-filter: blur(5px);
-      transform: perspective(1000px) rotateY(0deg) translateZ(0);
-      overflow: visible;
+      transition: all var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow: hidden; /* Ensure content stays within bounds */
     }
 
     .api-card::before {
       content: '';
       position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      background: linear-gradient(135deg, var(--primary), var(--tertiary), var(--secondary));
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent), var(--tertiary-accent));
       z-index: -1;
-      border-radius: 25px;
+      border-radius: 22px;
       opacity: 0;
-      transition: var(--transition);
+      transition: opacity var(--transition-speed) ease;
     }
 
     .api-card:hover {
-      transform: perspective(1000px) rotateY(5deg) translateY(-10px) translateZ(20px);
+      transform: translateY(-8px) scale(1.02);
       box-shadow: var(--shadow-lg);
       border-color: transparent;
       z-index: 10;
@@ -375,18 +362,16 @@
       opacity: 1;
     }
 
-    .api-card:hover .play-button {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
     .api-info h3 {
-      font-size: 1.3rem;
-      color: var(--dark);
-      font-weight: 800;
+      font-size: 1.4rem; /* Slightly larger for better visibility */
+      color: var(--text-primary);
+      font-weight: 700;
       margin-bottom: 0.5rem;
       position: relative;
       display: inline-block;
+      word-break: break-word; /* Ensure long names wrap */
+      line-height: 1.3;
+      transition: color var(--transition-speed) ease;
     }
 
     .api-info h3::after {
@@ -396,48 +381,54 @@
       left: 0;
       width: 50px;
       height: 3px;
-      background: var(--primary);
+      background: var(--primary-accent);
       border-radius: 2px;
+      transition: background var(--transition-speed) ease;
     }
 
     .api-info p {
       font-size: 0.95rem;
-      color: var(--darker);
+      color: var(--text-secondary);
       margin-bottom: 1.2rem;
       line-height: 1.7;
+      transition: color var(--transition-speed) ease;
     }
 
     .status {
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--bg-primary); /* Use primary background for status */
       padding: 0.5rem 1.2rem;
       border-radius: 50px;
-      font-weight: 700;
+      font-weight: 600;
       box-shadow: var(--shadow-sm);
-      border: 2px solid white;
-      display: inline-block; /* Ensure it doesn't take full width */
+      border: 1px solid var(--border-color);
+      display: inline-block;
       margin-top: 0.5rem;
+      color: var(--text-primary);
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
     }
 
     .status.warning {
-      background: linear-gradient(135deg, #FFD700, #FFA500);
+      background: var(--status-warning-bg);
       color: white;
+      border-color: transparent;
     }
 
     .status.danger {
-      background: linear-gradient(135deg, #FF4500, #FF0000);
+      background: var(--status-danger-bg);
       color: white;
+      border-color: transparent;
     }
 
     /* Play Button */
     .play-button {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--button-bg);
       border-radius: 50px;
       padding: 0.8rem 1.5rem;
       font-size: 1rem;
-      font-weight: 800;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: var(--transition);
-      border: 2px solid white;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      transition: all var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid var(--border-color);
       color: white;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -445,25 +436,14 @@
       overflow: hidden;
       z-index: 1;
       cursor: pointer;
-      align-self: flex-start; /* Align button to start of flex item */
-      margin-top: 1rem; /* Space above button */
+      align-self: flex-start;
+      margin-top: 1rem;
     }
 
-    .play-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, var(--tertiary), var(--secondary));
-      opacity: 0;
-      transition: var(--transition);
-      z-index: -1;
-    }
-
-    .play-button:hover::before {
-      opacity: 1;
+    .play-button:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: var(--shadow-md);
+      background: var(--button-hover-bg);
     }
 
     .play-button i {
@@ -478,7 +458,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.6); /* Darker overlay for modal */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -486,7 +466,7 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px); /* Slightly less blur for better focus */
     }
 
     .modal.active {
@@ -495,16 +475,16 @@
     }
 
     .modal-dialog {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--bg-secondary);
       border-radius: 25px;
-      border: 3px solid white;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
       transform: perspective(1000px) rotateX(-5deg) translateY(30px);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
       overflow: hidden;
       max-width: 700px;
       width: 90%;
-      padding: 0; /* Remove padding from dialog itself */
+      padding: 0;
     }
 
     .modal.active .modal-dialog {
@@ -512,18 +492,19 @@
     }
 
     .modal-header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--button-bg);
       color: white;
       padding: 1.5rem;
-      border-bottom: 3px solid white;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
     }
 
     .modal-header h5 {
       font-size: 1.5rem;
-      font-weight: 800;
+      font-weight: 700;
       margin: 0;
     }
 
@@ -540,13 +521,13 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
-      transition: var(--transition);
-      line-height: 1; /* Adjust line height for better centering */
+      transition: all var(--transition-speed) ease;
+      line-height: 1;
     }
 
     .btn-close:hover {
       transform: rotate(90deg) scale(1.2);
-      color: var(--tertiary);
+      color: var(--tertiary-accent);
     }
 
     .modal-body {
@@ -554,37 +535,39 @@
     }
 
     .copy-section {
-      background: rgba(147, 112, 219, 0.1);
-      border: 2px dashed var(--primary-light);
+      background: var(--bg-primary);
+      border: 1px dashed var(--border-color);
       border-radius: 15px;
       padding: 1rem;
-      font-weight: 600;
-      color: var(--darker);
+      font-weight: 500;
+      color: var(--text-secondary);
       font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 1.5rem;
-      word-break: break-all; /* Ensure long URLs wrap */
+      word-break: break-all;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
     }
 
     .copy-button {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--button-bg);
       border-radius: 10px;
       padding: 0.7rem 1.2rem;
-      font-weight: 700;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      transition: var(--transition);
-      border: 2px solid white;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-speed) ease;
+      border: 1px solid var(--border-color);
       color: white;
       cursor: pointer;
-      flex-shrink: 0; /* Prevent button from shrinking */
+      flex-shrink: 0;
     }
 
     .copy-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow);
+      background: var(--button-hover-bg);
     }
 
     /* Modal Tabs for Try API / Example Usage */
@@ -592,21 +575,22 @@
       display: flex;
       justify-content: center;
       margin-bottom: 1.5rem;
-      background: rgba(255, 255, 255, 0.7);
+      background: var(--bg-primary);
       border-radius: 50px;
       box-shadow: var(--shadow-sm);
-      border: 2px solid white;
+      border: 1px solid var(--border-color);
       padding: 0.3rem;
       gap: 0.5rem;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
     .modal-tab {
       background: transparent;
-      color: var(--dark);
-      font-weight: 700;
+      color: var(--text-primary);
+      font-weight: 600;
       padding: 0.6rem 1.5rem;
       border-radius: 50px;
-      transition: var(--transition);
+      transition: all var(--transition-speed) ease;
       font-size: 0.9rem;
       border: none;
       cursor: pointer;
@@ -615,17 +599,18 @@
     }
 
     .modal-tab.active {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--tab-active-bg);
       color: white;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-sm);
     }
 
     .modal-tab:hover:not(.active) {
-      background: rgba(255, 182, 193, 0.3);
+      background: var(--tab-hover-bg);
+      color: var(--primary-accent-dark);
     }
 
     .modal-content-section {
-      display: none; /* Hidden by default */
+      display: none;
     }
 
     .modal-content-section.active {
@@ -640,32 +625,33 @@
     }
 
     #paramForm input {
-      background: rgba(255, 255, 255, 0.9);
-      border: 2px solid var(--primary-light);
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
       border-radius: 15px;
       padding: 1rem;
       font-size: 1rem;
       box-shadow: var(--shadow-sm);
-      transition: var(--transition);
+      transition: all var(--transition-speed) ease;
       width: 100%;
+      color: var(--text-primary);
     }
 
     #paramForm input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3);
-      outline: none; /* Remove default outline */
+      border-color: var(--primary-accent);
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
+      outline: none;
     }
 
     #submitParamBtn {
-      background: linear-gradient(135deg, var(--tertiary), #20B2AA);
+      background: linear-gradient(135deg, var(--secondary-accent), var(--primary-accent));
       border-radius: 50px;
       padding: 1rem;
-      font-weight: 800;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      border: 2px solid white;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: var(--transition);
+      transition: all var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
       margin-top: 1rem;
       width: 100%;
       cursor: pointer;
@@ -674,19 +660,20 @@
 
     #submitParamBtn:hover {
       transform: translateY(-5px) scale(1.03);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow-md);
+      background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
     }
 
     #apiResponseLoading {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100px; /* Ensure spinner has space */
+      min-height: 100px;
     }
 
     .loading-spinner {
-      border: 4px solid rgba(147, 112, 219, 0.2);
-      border-top: 4px solid var(--secondary);
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary-accent);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -694,22 +681,23 @@
     }
 
     #apiResponseContent, #exampleUsageContent {
-      background: rgba(255, 255, 255, 0.9);
-      border: 2px solid var(--primary-light);
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
       border-radius: 15px;
       padding: 1.5rem;
       box-shadow: var(--shadow-sm);
-      overflow-x: auto; /* Allow horizontal scrolling for code */
-      max-height: 300px; /* Limit height for long responses */
-      white-space: pre-wrap; /* Preserve whitespace and wrap text */
-      word-wrap: break-word; /* Break long words */
+      overflow-x: auto;
+      max-height: 300px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
     #apiResponseContent pre, #exampleUsageContent pre {
       margin: 0;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'Fira Code', 'Courier New', Courier, monospace; /* Better font for code */
       font-size: 0.9rem;
-      color: var(--dark);
+      color: var(--text-primary);
     }
 
     #apiResponseContent img,
@@ -735,16 +723,16 @@
 
     /* Footer */
     .footer {
-      border-top: 3px solid white;
-      padding: 3rem 1.5rem 1.5rem 1.5rem; /* Add bottom padding */
-      color: var(--darker);
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.7);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 1.5rem 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      background: var(--bg-secondary);
       border-radius: 20px 20px 0 0;
       margin-top: 4rem;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 -5px 15px var(--shadow-color);
       text-align: center;
+      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, color var(--transition-speed) ease;
     }
 
     .footer #credits {
@@ -758,13 +746,13 @@
     }
 
     .contact a {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--button-bg);
       color: white;
       width: 50px;
       height: 50px;
-      border: 2px solid white;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-      transition: var(--transition);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      transition: all var(--transition-speed) ease;
       font-size: 1.5rem;
       display: flex;
       justify-content: center;
@@ -775,23 +763,18 @@
 
     .contact a:hover {
       transform: translateY(-8px) rotate(5deg);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow-md);
+      background: var(--button-hover-bg);
     }
 
     /* Animations */
     @keyframes cardEntrance {
-      from {
-        opacity: 0;
-        transform: perspective(1000px) rotateY(20deg) translateY(30px) translateZ(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: perspective(1000px) rotateY(0) translateY(0) translateZ(0);
-      }
+      from { opacity: 0; transform: translateY(30px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .api-card {
-      animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: cardEntrance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     .fade-in {
@@ -799,21 +782,13 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px) perspective(1000px) rotateX(10deg);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) perspective(1000px) rotateX(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Loading spinner */
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
     /* Utility Classes */
@@ -823,92 +798,28 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
-      body {
-        padding: 1rem;
-      }
-
-      .title-container {
-        padding: 1rem;
-      }
-      
-      #apiTitle {
-        font-size: 2rem;
-      }
-      
-      .hero p {
-        font-size: 1rem;
-        padding: 0.8rem;
-      }
-
-      #apiLinks {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #apiLinks a {
-        width: 80%; /* Make links wider on small screens */
-        text-align: center;
-        margin-right: 0;
-      }
-      
-      .api-card {
-        padding: 1.2rem;
-      }
-      
-      .play-button {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-      }
-
-      .modal-dialog {
-        width: 95%;
-      }
-
-      .modal-header {
-        padding: 1rem;
-      }
-
-      .modal-header h5 {
-        font-size: 1.2rem;
-      }
-
-      .modal-body {
-        padding: 1rem;
-      }
-
-      .copy-section {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .copy-button {
-        width: 100%;
-        margin-top: 0.5rem;
-      }
-
-      .modal-tabs {
-        flex-wrap: wrap;
-      }
+      body { padding: 1rem; }
+      .header-container { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 0.8rem; }
+      #apiTitle { font-size: 2rem; }
+      .hero p { font-size: 1rem; padding: 0.8rem; }
+      #apiLinks { flex-direction: column; align-items: center; }
+      #apiLinks a { width: 80%; text-align: center; margin-right: 0; }
+      .api-card { padding: 1.2rem; }
+      .play-button { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+      .modal-dialog { width: 95%; }
+      .modal-header { padding: 1rem; }
+      .modal-header h5 { font-size: 1.2rem; }
+      .modal-body { padding: 1rem; }
+      .copy-section { flex-direction: column; align-items: stretch; }
+      .copy-button { width: 100%; margin-top: 0.5rem; }
+      .modal-tabs { flex-wrap: wrap; }
     }
 
     @media (max-width: 480px) {
-      .stats div {
-        padding: 1.2rem;
-      }
-      
-      .stats p {
-        font-size: 1.8rem;
-      }
-      
-      .contact a {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-      }
-
-      .tabs {
-        justify-content: flex-start; /* Align tabs to start for better scrolling */
-      }
+      .stats div { padding: 1.2rem; }
+      .stats p { font-size: 1.8rem; }
+      .contact a { width: 45px; height: 45px; font-size: 1.3rem; }
+      .tabs { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -927,8 +838,14 @@
 
   <div class="container">
     <section class="hero fade-in">
-      <div class="title-container">
-        <h2 id="apiTitle"></h2>
+      <div class="header-container">
+        <div class="title-container">
+          <h2 id="apiTitle"></h2>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon d-none"></i>
+        </button>
       </div>
       <p>Multi Fungsi Rest API dengan integrasi yang mudah dan minimalis untuk Pengembang Bot Dan Website</p>
       <section id="apiLinks">
@@ -975,18 +892,7 @@
 
         <div id="example-usage-section" class="modal-content-section">
           <div id="exampleUsageContent">
-            <pre><code class="language-javascript">
-// Contoh penggunaan JavaScript (Fetch API)
-fetch('https://api.example.com/your-endpoint?param1=value1&param2=value2')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
-// Contoh penggunaan Python (requests library)
-// import requests
-// response = requests.get('https://api.example.com/your-endpoint', params={'param1': 'value1', 'param2': 'value2'})
-// print(response.json())
-            </code></pre>
+            <!-- Content will be generated by JS -->
           </div>
         </div>
       </div>
@@ -1020,6 +926,9 @@ fetch('https://api.example.com/your-endpoint?param1=value1&param2=value2')
       document.querySelector('.container').style.display = 'none';
       document.querySelector('footer').style.display = 'none';
       
+      // Apply saved theme or default to light
+      applyTheme();
+
       // Load settings and then hide loading screen
       loadSettings().then(() => {
         setTimeout(() => {
@@ -1031,6 +940,33 @@ fetch('https://api.example.com/your-endpoint?param1=value1&param2=value2')
           }, 500); // Duration of fade-out
         }, 1000); // Delay before fade-out starts
       });
+    });
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const sunIcon = themeToggleBtn.querySelector('.fa-sun');
+    const moonIcon = themeToggleBtn.querySelector('.fa-moon');
+
+    function applyTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        sunIcon.classList.add('d-none');
+        moonIcon.classList.remove('d-none');
+      } else {
+        document.body.classList.remove('dark-mode');
+        sunIcon.classList.remove('d-none');
+        moonIcon.classList.add('d-none');
+      }
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'light');
+      } else {
+        localStorage.setItem('theme', 'dark');
+      }
+      applyTheme();
     });
 
     async function loadSettings() {
@@ -1102,7 +1038,7 @@ fetch('https://api.example.com/your-endpoint?param1=value1&param2=value2')
           
           // Trigger reflow to restart animation for each card
           setTimeout(() => {
-            card.style.animation = `cardEntrance 0.6s ease-out ${i * 0.1}s forwards`;
+            card.style.animation = `cardEntrance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${i * 0.05}s forwards`;
           }, 10);
         });
       }
