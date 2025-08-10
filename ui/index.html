@@ -963,31 +963,39 @@
       <div id="api-list" class="api-list"></div>
     </section>
   </div>
+  
+<!-- Modal for API Response -->
+<div class="modal" id="apiResponseModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div>
+        <h5 id="modalTitle"></h5>
+        <span id="modalDesc"></span>
+      </div>
+      <button id="btn-close" class="btn-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="copy-section">
+        <span id="copyEndpointText"></span>
+        <button class="copy-button">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <form id="paramForm" style="margin-bottom: 0.5rem"></form>
+      <button id="submitParamBtn" type="button" style="display: none;">Jalankan Permintaan</button>
 
-  <!-- Modal for API Response -->
-  <div class="modal" id="apiResponseModal">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <div>
-          <h5 id="modalTitle"></h5>
-          <span id="modalDesc"></span>
+      <!-- Hanya satu versi loading spinner -->
+      <div id="apiResponseLoading" style="display: none; text-align:center;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" style="margin-top:10px;">
+          Loading, tunggu sebentar...
         </div>
-        <button id="btn-close" class="btn-close">×</button>
       </div>
-      <div class="modal-body">
-        <div class="copy-section">
-          <span id="copyEndpointText"></span>
-          <button class="copy-button">
-            <i class="far fa-copy"></i>
-          </button>
-        </div>
-        <form id="paramForm" style="margin-bottom: 0.5rem"></form>
-        <button id="submitParamBtn" type="button" style="display: none;">Jalankan Permintaan</button>
-        <div id="apiResponseLoading" class="loading-spinner" style="display: none;"></div>
-        <div id="apiResponseContent" class="d-none"></div>
-      </div>
+
+      <div id="apiResponseContent" class="d-none"></div>
     </div>
   </div>
+</div>
 
   <footer class="footer">
     <div id="credits"></div>
