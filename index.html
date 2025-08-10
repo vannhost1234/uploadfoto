@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
     /* ===== Base Theme Variables (Light Theme) ===== */
     :root {
@@ -29,15 +29,18 @@
       --danger: #F44336;
       --info: #2196F3;
 
-      --font-family: 'Poppins', sans-serif;
-      --border-radius: 12px;
-      --border-radius-sm: 8px;
+      --font-family-main: 'Poppins', sans-serif;
+      --font-family-display: 'Orbitron', sans-serif; /* New display font */
+      --border-radius: 16px; /* Slightly larger */
+      --border-radius-sm: 10px; /* Slightly larger */
 
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.08); /* Stronger shadow */
-      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 15px 15px -5px rgba(0, 0, 0, 0.1); /* Even larger shadow */
-      --card-border-hover: var(--primary); /* New variable for hover border */
-      --card-gradient-border: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* New gradient border */
+      --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 12px 24px -6px rgba(0, 0, 0, 0.2), 0 6px 12px -3px rgba(0, 0, 0, 0.12); /* Stronger shadow */
+      --shadow-lg: 0 30px 60px -15px rgba(0, 0, 0, 0.3), 0 20px 20px -8px rgba(0, 0, 0, 0.15); /* Even larger shadow */
+      --card-border-hover: var(--primary);
+      --card-gradient-border: linear-gradient(45deg, var(--primary), var(--secondary)); /* More vibrant gradient */
+      --text-glow: 0 0 8px rgba(156, 39, 176, 0.6), 0 0 15px rgba(156, 39, 176, 0.4); /* Text glow effect */
+      --element-glow: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 188, 212, 0.3); /* Element glow effect */
     }
 
     /* ===== Dark Theme Variables ===== */
@@ -49,19 +52,22 @@
       --accent: #ffe082;
       --text-color: #e0e0e0;
       --text-color-light: #b0b0b0;
-      --bg-color: #121212; /* Dark Gray */
-      --bg-light: #1e1e1e; /* Slightly Lighter Dark Gray */
-      --bg-lighter: #2c2c2c; /* Even Lighter Dark Gray */
-      --border-color: #3a3a3a;
+      --bg-color: #0a0a1a; /* Very Dark Blue */
+      --bg-light: #1a1a2e; /* Dark Blue */
+      --bg-lighter: #2a2a4a; /* Slightly Lighter Dark Blue */
+      --border-color: #3a3a5a;
       --success: #66bb6a;
       --warning: #ffee58;
       --danger: #ef5350;
       --info: #64b5f6;
 
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
-      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 15px 15px -5px rgba(0, 0, 0, 0.3);
-      --card-border-hover: var(--primary-light); /* Adjust for dark theme */
+      --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 12px 24px -6px rgba(0, 0, 0, 0.4), 0 6px 12px -3px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 30px 60px -15px rgba(0, 0, 0, 0.6), 0 20px 20px -8px rgba(0, 0, 0, 0.35);
+      --card-border-hover: var(--primary-light);
+      --card-gradient-border: linear-gradient(45deg, var(--primary), var(--secondary));
+      --text-glow: 0 0 8px rgba(187, 134, 252, 0.6), 0 0 15px rgba(187, 134, 252, 0.4);
+      --element-glow: 0 0 10px rgba(3, 218, 198, 0.5), 0 0 20px rgba(3, 218, 198, 0.3);
     }
 
     /* ===== General Styles ===== */
@@ -72,15 +78,46 @@
     }
 
     body {
-      font-family: var(--font-family);
-      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%); /* Smooth background gradient */
-      background-attachment: fixed; /* Keep gradient fixed during scroll */
+      font-family: var(--font-family-main);
+      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%);
+      background-attachment: fixed;
       color: var(--text-color);
       line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.5s ease, color 0.5s ease;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative; /* For background effects */
+      overflow-x: hidden; /* Prevent horizontal scroll from animations */
+    }
+
+    /* Background Grid/Particles Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      z-index: -2;
+      animation: backgroundPan 60s linear infinite;
+    }
+
+    body.dark-theme::before {
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+      opacity: 0.2;
+    }
+
+    @keyframes backgroundPan {
+      from { background-position: 0 0; }
+      to { background-position: 4000px 4000px; }
     }
 
     .container {
@@ -88,6 +125,8 @@
       margin: 0 auto;
       padding: 20px;
       flex-grow: 1;
+      position: relative; /* For z-index */
+      z-index: 1;
     }
 
     a {
@@ -105,7 +144,7 @@
       border: none;
       background: none;
       padding: 0;
-      font-family: var(--font-family);
+      font-family: var(--font-family-main);
     }
 
     /* Utility Classes */
@@ -133,7 +172,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%); /* Match body gradient */
+      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -143,19 +182,21 @@
     }
 
     .loading-spinner-large {
-      width: 80px;
-      height: 80px;
-      border: 8px solid var(--primary-light);
+      width: 100px; /* Larger spinner */
+      height: 100px;
+      border: 10px solid var(--primary-light);
       border-top-color: var(--primary);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      box-shadow: var(--shadow-sm); /* Add shadow */
+      animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; /* More dynamic spin */
+      box-shadow: var(--shadow-md), var(--element-glow); /* Add glow */
     }
 
     .loading-text {
-      margin-top: 20px;
-      font-size: 1.2rem;
+      margin-top: 25px;
+      font-size: 1.5rem; /* Larger text */
       color: var(--text-color);
+      font-family: var(--font-family-display); /* Digital font */
+      text-shadow: var(--text-glow); /* Text glow */
     }
 
     @keyframes spin {
@@ -164,18 +205,21 @@
 
     /* ===== Navbar Styles ===== */
     .navbar {
-      background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-      backdrop-filter: blur(10px); /* Stronger blur effect */
-      padding: 15px 20px;
-      box-shadow: var(--shadow-sm); /* Shadow on navbar */
+      background: rgba(255, 255, 255, 0.1); /* More transparent */
+      backdrop-filter: blur(20px) saturate(180%); /* Stronger blur and saturation */
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      padding: 18px 25px; /* Slightly more padding */
+      box-shadow: var(--shadow-md);
       position: sticky;
       top: 0;
       z-index: 1000;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
     }
 
     body.dark-theme .navbar {
-      background: rgba(15, 23, 42, 0.8); /* Semi-transparent for dark theme */
+      background: rgba(15, 23, 42, 0.3); /* More transparent for dark theme */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     }
 
     .navbar-container {
@@ -187,174 +231,192 @@
     }
 
     .brand {
-      font-size: 1.5rem; /* Larger brand font size */
+      font-size: 1.8rem; /* Even larger brand font size */
       font-weight: 700;
       color: var(--primary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow */
-      transition: color 0.3s ease;
+      font-family: var(--font-family-display); /* Digital font */
+      text-shadow: var(--text-glow); /* Text glow */
+      transition: all 0.3s ease;
+    }
+
+    .brand:hover {
+      transform: scale(1.05);
+      text-shadow: var(--text-glow), 0 0 20px var(--primary-light);
     }
 
     .navbar-right {
       display: flex;
-      gap: 15px;
+      gap: 20px; /* More space */
     }
 
     .navbar-right .nav-icon {
-      background: var(--bg-light);
-      color: var(--text-color);
-      width: 40px;
-      height: 40px;
+      background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+      color: var(--primary); /* Icon color from primary */
+      width: 45px; /* Larger icons */
+      height: 45px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm); /* Shadow on navbar icon */
+      font-size: 1.4rem; /* Larger icon font */
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+      backdrop-filter: blur(5px);
+    }
+
+    body.dark-theme .navbar-right .nav-icon {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.4);
     }
 
     .navbar-right .nav-icon:hover {
-      background: var(--primary-light);
+      background: var(--primary);
       color: white;
-      box-shadow: var(--shadow-md); /* Larger shadow on hover */
-      transform: translateY(-4px) rotate(5deg); /* Lift and slight rotate animation */
+      box-shadow: var(--shadow-md), var(--element-glow); /* Add glow on hover */
+      transform: translateY(-5px) rotate(10deg) scale(1.1); /* More pronounced animation */
+      border-color: transparent;
     }
 
     /* Theme Toggle Button */
     #themeToggle {
-      box-shadow: var(--shadow-sm); /* Shadow on theme toggle button */
+      box-shadow: var(--shadow-sm);
     }
 
     #themeToggle:hover {
-      box-shadow: var(--shadow-md); /* Larger shadow on hover */
-      transform: translateY(-3px) rotate(15deg); /* Lift and rotate animation */
+      box-shadow: var(--shadow-md), var(--element-glow);
+      transform: translateY(-4px) rotate(20deg) scale(1.1); /* More pronounced animation */
     }
 
     /* ===== Page Sections ===== */
     .hero {
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px; /* More padding */
       background: var(--bg-light);
       border-radius: var(--border-radius);
-      margin-top: 30px;
-      box-shadow: var(--shadow-md);
+      margin-top: 40px;
+      box-shadow: var(--shadow-lg); /* Stronger shadow */
       position: relative;
       overflow: hidden;
       z-index: 1;
+      border: 1px solid var(--border-color);
+      transform: translateZ(0); /* Ensure 3D context */
+    }
+
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+      opacity: 0.15; /* Slightly more visible */
+      border-radius: 50%;
+      z-index: -1;
     }
 
     .hero::before {
-      content: '';
-      position: absolute;
-      top: -50px;
-      left: -50px;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-      opacity: 0.1;
-      border-radius: 50%;
-      animation: float1 10s infinite ease-in-out;
-      z-index: -1;
+      top: -80px; left: -80px; width: 250px; height: 250px;
+      animation: float1 15s infinite ease-in-out;
     }
 
     .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -50px;
-      right: -50px;
-      width: 150px;
-      height: 150px;
+      bottom: -80px; right: -80px; width: 200px; height: 200px;
       background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
-      opacity: 0.1;
-      border-radius: 50%;
-      animation: float2 12s infinite ease-in-out;
-      z-index: -1;
+      animation: float2 18s infinite ease-in-out;
     }
 
     @keyframes float1 {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(20px, 30px); }
-      100% { transform: translate(0, 0); }
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, 40px) rotate(180deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
     }
 
     @keyframes float2 {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(-20px, -30px); }
-      100% { transform: translate(0, 0); }
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -40px) rotate(-180deg); }
+      100% { transform: translate(0, 0) rotate(-360deg); }
     }
 
     .title-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .icon-title {
-      font-size: 3rem; /* Larger icon size */
+      font-size: 3.5rem; /* Even larger icon */
       color: var(--primary);
-      margin-right: 15px;
-      filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2)); /* Shadow for 3D effect */
-      transition: transform 0.3s ease;
+      margin-right: 20px;
+      filter: drop-shadow(5px 5px 8px rgba(0, 0, 0, 0.3)); /* Stronger shadow for 3D */
+      transition: transform 0.4s ease, filter 0.4s ease;
     }
 
     .icon-title:hover {
-      transform: rotate(10deg) scale(1.1);
+      transform: rotate(15deg) scale(1.15);
+      filter: drop-shadow(5px 5px 15px var(--primary-light)); /* Glow on hover */
     }
 
     .hero h2 {
-      font-size: 2.8rem; /* Larger font size */
-      color: var(--primary-dark);
-      margin-bottom: 10px;
-      letter-spacing: -1px; /* Slightly tighter spacing */
-      line-height: 1.2;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Add slight text shadow */
-      background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+      font-size: 3.5rem; /* Massive font size */
+      font-family: var(--font-family-display); /* Digital font */
+      margin-bottom: 15px;
+      letter-spacing: -2px; /* Tighter spacing */
+      line-height: 1.1;
+      text-shadow: var(--text-glow); /* Text glow */
+      background: linear-gradient(45deg, var(--primary-dark), var(--secondary)); /* More vibrant gradient */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      display: inline-block; /* Needed for text gradient */
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .hero h2:hover {
+      transform: scale(1.02);
+      text-shadow: var(--text-glow), 0 0 25px var(--secondary);
     }
 
     body.dark-theme .hero h2 {
-      background: linear-gradient(45deg, var(--primary-light), var(--primary));
+      background: linear-gradient(45deg, var(--primary-light), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hero p {
-      font-size: 1.15rem; /* Larger font size */
+      font-size: 1.25rem; /* Larger font size */
       color: var(--text-color-light);
-      max-width: 700px; /* Limit width for readability */
+      max-width: 800px; /* Wider for readability */
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 30px;
-    }
-
-    #apiLinks {
-      margin-top: 20px;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     /* ===== Tabs ===== */
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 40px;
-      margin-bottom: 20px;
+      gap: 15px; /* More space */
+      margin-top: 50px;
+      margin-bottom: 30px;
       justify-content: center;
+      background: var(--bg-light);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
     }
 
     .tab {
-      background: var(--bg-light);
+      background: var(--bg-color);
       color: var(--text-color);
-      padding: 0.2rem 0.5rem; /* Slightly larger padding */
+      padding: 0.4rem 0.8rem; /* More padding */
       border-radius: var(--border-radius-sm);
-      font-weight: 500;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       position: relative;
-      overflow: hidden; /* For hover effect */
-      font-size: 1.05rem; /* Larger tab font size */
+      overflow: hidden;
+      font-size: 1.1rem; /* Larger tab font size */
       box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
     }
 
     .tab::before {
@@ -364,73 +426,69 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--primary-light); /* Background color on hover */
+      background: linear-gradient(90deg, var(--primary-light), var(--secondary)); /* Gradient hover */
       opacity: 0;
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.4s ease, opacity 0.4s ease;
       z-index: -1;
-      border-radius: var(--border-radius-sm); /* Rounded corners */
+      border-radius: var(--border-radius-sm);
     }
 
     .tab:hover:not(.active)::before {
       transform: scaleX(1);
-      opacity: 0.1; /* Low opacity */
+      opacity: 0.15; /* Slightly more visible */
     }
 
     .tab.active {
-      border-bottom: none; /* Remove bottom border */
-      background: var(--primary); /* Solid background for active tab */
-      color: white; /* White text */
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Solid gradient for active */
+      color: white;
       border-radius: var(--border-radius-sm);
-      box-shadow: var(--shadow-sm); /* Shadow for active tab */
-      transform: translateY(-2px); /* Slightly lift */
+      box-shadow: var(--shadow-md), var(--element-glow); /* Glow for active tab */
+      transform: translateY(-3px) scale(1.02); /* More lift and scale */
+      border-color: transparent;
     }
 
     .tab.active::before {
-      display: none; /* Hide pseudo-element for active tab */
-    }
-
-    .tab:after {
-      display: none; /* Remove old after effect */
+      display: none;
     }
 
     /* ===== API Cards ===== */
     .api-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      padding: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Wider cards */
+      gap: 30px; /* More space */
+      padding: 25px 0;
     }
 
     .api-card {
       background: var(--bg-light);
       border-radius: var(--border-radius);
-      padding: 25px;
+      padding: 30px; /* More padding */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 1px solid var(--border-color); /* Default border */
-      box-shadow: var(--shadow-sm); /* Default shadow */
-      transform: perspective(1000px) rotateY(0deg) scale(1); /* For 3D effect */
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      transform: perspective(1000px) rotateY(0deg) scale(1);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
       position: relative;
       overflow: hidden;
-      animation: cardEntrance 0.6s ease-out forwards; /* Initial animation */
+      animation: cardEntrance 0.8s ease-out forwards; /* Slower initial animation */
+      will-change: transform, box-shadow; /* Performance hint */
     }
 
     @keyframes cardEntrance {
-      from { opacity: 0; transform: translateY(30px) scale(0.9); }
+      from { opacity: 0; transform: translateY(50px) scale(0.8); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .api-card:hover {
-      transform: perspective(1000px) rotateY(3deg) scale(1.02); /* Slight rotate and enlarge */
-      border-color: transparent; /* Remove default border on hover */
-      box-shadow: var(--shadow-md); /* Larger shadow on hover */
+      transform: perspective(1000px) rotateY(5deg) scale(1.05); /* More pronounced 3D rotate and enlarge */
+      border-color: transparent;
+      box-shadow: var(--shadow-lg), var(--element-glow); /* Stronger shadow and glow on hover */
     }
 
-    /* Add gradient border on hover for cards */
     .api-card::before {
       content: '';
       position: absolute;
@@ -439,72 +497,89 @@
       right: 0;
       bottom: 0;
       border-radius: var(--border-radius);
-      padding: 2px; /* Border thickness */
-      background: var(--card-gradient-border); /* Use gradient border */
+      padding: 3px; /* Thicker border */
+      background: var(--card-gradient-border);
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      opacity: 0; /* Hidden by default */
-      transition: opacity 0.4s ease;
+      opacity: 0;
+      transition: opacity 0.5s ease;
       pointer-events: none;
     }
 
     .api-card:hover::before {
-      opacity: 1; /* Show on hover */
+      opacity: 1;
     }
 
     .api-info h3 {
-      font-size: 1.15rem; /* Larger font size */
+      font-size: 1.3rem; /* Larger font size */
       color: var(--primary-dark);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-family: var(--font-family-display); /* Digital font */
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .api-info p {
-      font-size: 0.95rem; /* Larger font size */
+      font-size: 1rem; /* Larger font size */
       color: var(--text-color-light);
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .api-info .status {
       display: inline-block;
-      padding: 5px 10px;
+      padding: 6px 12px; /* More padding */
       border-radius: var(--border-radius-sm);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 10px;
+      font-size: 0.9rem; /* Slightly larger */
+      font-weight: 700;
+      margin-top: 15px;
       color: white;
-      background-color: var(--info); /* Default status color */
+      background-color: var(--info);
+      box-shadow: var(--shadow-sm);
+      text-transform: uppercase; /* Uppercase status */
     }
 
-    .api-info .status.danger {
-      background-color: var(--danger);
-    }
-
-    .api-info .status.warning {
-      background-color: var(--warning);
-    }
+    .api-info .status.danger { background-color: var(--danger); }
+    .api-info .status.warning { background-color: var(--warning); }
 
     .play-button {
-      background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Gradient on button */
+      background: linear-gradient(45deg, var(--primary), var(--secondary)); /* More vibrant gradient */
       color: white;
-      padding: 12px 20px;
+      padding: 15px 25px; /* More padding */
       border-radius: var(--border-radius-sm);
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.1rem; /* Larger font */
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin-top: 20px;
-      box-shadow: var(--shadow-sm); /* Shadow on play button */
-      transition: all 0.3s ease;
-      transform: translateZ(0); /* Ensure 3D effect */
+      gap: 10px;
+      margin-top: 25px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform: translateZ(0);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .play-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2); /* Shine effect */
+      transform: skewX(-20deg);
+      transition: all 0.4s ease;
+    }
+
+    .play-button:hover::before {
+      left: 100%;
     }
 
     .play-button:hover {
-      background: linear-gradient(45deg, var(--primary-dark), var(--primary)); /* Reverse gradient on hover */
-      transform: translateY(-3px) translateZ(10px); /* Lift and move forward slightly */
-      box-shadow: var(--shadow-md); /* Larger shadow */
+      background: linear-gradient(45deg, var(--primary-dark), var(--secondary));
+      transform: translateY(-5px) translateZ(20px) scale(1.02); /* More lift and forward */
+      box-shadow: var(--shadow-lg), var(--element-glow); /* Stronger shadow and glow */
     }
 
     /* ===== Modal Styles ===== */
@@ -514,13 +589,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7); /* Darker overlay */
+      backdrop-filter: blur(10px); /* Blur modal background */
       display: flex;
       justify-content: center;
       align-items: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
       z-index: 2000;
     }
 
@@ -532,21 +608,21 @@
     .modal-dialog {
       background: var(--bg-light);
       border-radius: var(--border-radius);
-      width: 90%;
-      max-width: 700px;
-      box-shadow: var(--shadow-lg); /* Strong shadow for modal */
-      border: none; /* Remove default border, we'll use gradient border */
-      position: relative; /* For pseudo-element border */
-      overflow: hidden; /* Ensure gradient border doesn't overflow */
-      transform: translateY(-50px) scale(0.9);
-      transition: transform 0.3s ease;
+      width: 95%; /* Wider modal */
+      max-width: 800px; /* Max width */
+      box-shadow: var(--shadow-lg);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(-80px) scale(0.8); /* More pronounced initial state */
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border: 1px solid var(--border-color);
     }
 
     .modal.active .modal-dialog {
       transform: translateY(0) scale(1);
     }
 
-    /* Add gradient border to modal */
     .modal-dialog::before {
       content: '';
       position: absolute;
@@ -555,72 +631,79 @@
       right: 0;
       bottom: 0;
       border-radius: var(--border-radius);
-      padding: 2px; /* Border thickness */
-      background: var(--card-gradient-border); /* Use gradient border */
+      padding: 4px; /* Thicker border */
+      background: var(--card-gradient-border);
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      pointer-events: none; /* Ensure it doesn't interfere with interaction */
+      pointer-events: none;
+      z-index: -1; /* Ensure it's behind content */
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding: 20px 25px;
+      padding: 25px 30px; /* More padding */
       border-bottom: 1px solid var(--border-color);
+      background: var(--bg-color); /* Header background */
     }
 
     .modal-header h5 {
-      font-size: 1.5rem;
+      font-size: 1.8rem; /* Larger title */
       color: var(--primary-dark);
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      font-family: var(--font-family-display);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .modal-header span {
-      font-size: 0.9rem;
+      font-size: 1rem; /* Larger description */
       color: var(--text-color-light);
     }
 
     .btn-close {
-      background: var(--bg-lighter); /* Background for prominence */
+      background: var(--bg-lighter);
       color: var(--text-color);
-      width: 35px;
-      height: 35px;
+      width: 40px; /* Larger button */
+      height: 40px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
+      font-size: 1.8rem; /* Larger icon */
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
     }
 
     .btn-close:hover {
-      background: var(--danger); /* Background color on hover */
+      background: var(--danger);
       color: white;
-      transform: rotate(180deg) scale(1.1); /* Rotate and slightly enlarge animation */
+      transform: rotate(360deg) scale(1.2); /* Full rotation and larger scale */
+      box-shadow: var(--shadow-md), 0 0 15px var(--danger); /* Glow on hover */
     }
 
     .modal-body {
-      padding: 25px;
+      padding: 30px; /* More padding */
     }
 
     .copy-section {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-sm);
-      padding: 10px 15px;
+      padding: 12px 18px; /* More padding */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
+      margin-bottom: 20px;
+      font-size: 1rem; /* Larger font */
       color: var(--text-color);
       word-break: break-all;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .copy-section.active {
@@ -631,80 +714,102 @@
     .copy-button {
       background: var(--primary);
       color: white;
-      padding: 8px 12px;
+      padding: 10px 15px; /* More padding */
       border-radius: var(--border-radius-sm);
-      font-size: 0.9rem;
-      margin-left: 10px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 1rem;
+      margin-left: 15px;
+      transition: all 0.3s ease;
       box-shadow: var(--shadow-sm);
     }
 
     .copy-button:hover {
       background: var(--primary-dark);
-      transform: scale(1.05);
+      transform: scale(1.1); /* More scale */
+      box-shadow: var(--shadow-md);
     }
 
     .modal-body form input {
       width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 10px;
+      padding: 15px 20px; /* More padding */
+      margin-bottom: 15px;
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-sm);
       background: var(--bg-lighter);
       color: var(--text-color);
-      font-family: var(--font-family);
-      font-size: 1rem;
+      font-family: var(--font-family-main);
+      font-size: 1.1rem; /* Larger font */
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: var(--shadow-sm); /* Add shadow to input */
+      box-shadow: var(--shadow-sm);
     }
 
     .modal-body form input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-light); /* More prominent focus effect */
+      box-shadow: 0 0 0 4px var(--primary-light), var(--element-glow); /* Stronger focus and glow */
     }
 
     #submitParamBtn {
-      background: var(--primary);
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
       color: white;
-      padding: 12px 20px;
+      padding: 15px 25px; /* More padding */
       border-radius: var(--border-radius-sm);
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       width: 100%;
-      margin-top: 10px;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-md); /* Shadow on submit button */
+      margin-top: 15px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #submitParamBtn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-20deg);
+      transition: all 0.4s ease;
+    }
+
+    #submitParamBtn:hover::before {
+      left: 100%;
     }
 
     #submitParamBtn:hover {
-      background: var(--primary-dark);
-      box-shadow: var(--shadow-lg); /* Larger shadow on hover */
-      transform: translateY(-2px);
+      background: linear-gradient(45deg, var(--primary-dark), var(--secondary));
+      box-shadow: var(--shadow-lg), var(--element-glow);
+      transform: translateY(-3px) scale(1.01);
     }
 
     .loading-spinner {
-      border: 4px solid var(--primary-light);
+      border: 6px solid var(--primary-light); /* Thicker spinner */
       border-top-color: var(--primary);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 0.8s linear infinite;
-      margin: 20px auto;
+      width: 50px; /* Larger spinner */
+      height: 50px;
+      animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      margin: 30px auto;
+      box-shadow: var(--shadow-sm), var(--element-glow);
     }
 
     #apiResponseContent {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-sm);
-      padding: 15px;
-      max-height: 300px;
+      padding: 20px; /* More padding */
+      max-height: 400px; /* Taller response area */
       overflow-y: auto;
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace; /* Monospace font for code */
-      font-size: 0.9rem;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.95rem; /* Slightly larger font */
       color: var(--text-color);
-      white-space: pre-wrap; /* Preserve whitespace and wrap text */
+      white-space: pre-wrap;
       word-break: break-all;
+      box-shadow: var(--shadow-sm);
+      position: relative;
     }
 
     #apiResponseContent pre {
@@ -717,178 +822,124 @@
       max-width: 100%;
       height: auto;
       display: block;
-      margin: 10px auto;
+      margin: 15px auto; /* More margin */
       border-radius: var(--border-radius-sm);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
     }
 
     /* ===== Footer Styles ===== */
     .footer {
-      background: var(--bg-light); /* Footer background */
-      padding: 1.5rem 20px; /* Larger top/bottom padding */
+      background: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+      backdrop-filter: blur(15px);
+      padding: 2rem 25px; /* More padding */
       text-align: center;
       color: var(--text-color-light);
-      font-size: 0.9rem;
-      margin-top: 40px;
-      box-shadow: 0 -5px 15px -5px rgba(0, 0, 0, 0.05); /* Shadow above footer */
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      font-size: 0.95rem;
+      margin-top: 50px;
+      box-shadow: 0 -8px 20px -8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-theme .footer {
+      background: rgba(15, 23, 42, 0.3);
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
     }
 
     .footer #credits {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      font-family: var(--font-family-display);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .footer .contact {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 25px; /* More space */
     }
 
     .footer .contact a {
-      color: var(--text-color);
-      font-size: 1.8rem;
-      width: 45px;
-      height: 45px;
+      color: var(--primary);
+      font-size: 2.2rem; /* Larger icons */
+      width: 55px; /* Larger buttons */
+      height: 55px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       background: var(--bg-color);
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm); /* Shadow on contact icon */
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
     }
 
     .footer .contact a:hover {
-      color: var(--primary);
-      background: var(--primary-light);
       color: white;
-      box-shadow: var(--shadow-md); /* Larger shadow on hover */
-      transform: translateY(-6px) scale(1.1); /* Lift and enlarge animation */
+      background: var(--primary);
+      box-shadow: var(--shadow-md), var(--element-glow); /* Glow on hover */
+      transform: translateY(-8px) scale(1.2); /* More lift and scale */
+      border-color: transparent;
     }
 
-    /* Responsive adjustments for larger fonts and shadows */
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .hero h2 {
-        font-size: 2.2rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .icon-title {
-        font-size: 2.5rem;
-      }
-      .tab {
-        font-size: 0.95rem;
-      }
-      .api-info h3 {
-        font-size: 1.05rem;
-      }
-      .api-info p {
-        font-size: 0.88rem;
-      }
-      .brand {
-        font-size: 1.2rem;
-      }
-      .navbar-right .nav-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-      }
-      .modal-header h5 {
-        font-size: 1.2rem;
-      }
-      .btn-close {
-        width: 30px;
-        height: 30px;
-        font-size: 1.2rem;
-      }
+      .hero h2 { font-size: 2.8rem; }
+      .hero p { font-size: 1.1rem; }
+      .icon-title { font-size: 3rem; }
+      .tab { font-size: 1rem; padding: 0.3rem 0.6rem; }
+      .api-info h3 { font-size: 1.2rem; }
+      .api-info p { font-size: 0.9rem; }
+      .brand { font-size: 1.5rem; }
+      .navbar-right .nav-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+      .modal-header h5 { font-size: 1.5rem; }
+      .btn-close { width: 35px; height: 35px; font-size: 1.5rem; }
+      .modal-body { padding: 20px; }
+      .copy-section { font-size: 0.9rem; padding: 10px 15px; }
+      .copy-button { font-size: 0.9rem; padding: 8px 12px; }
+      .modal-body form input { font-size: 1rem; padding: 12px 15px; }
+      #submitParamBtn { font-size: 1rem; padding: 12px 20px; }
+      .footer .contact a { font-size: 1.8rem; width: 45px; height: 45px; }
     }
 
     @media (max-width: 480px) {
-      .hero {
-        padding: 40px 15px;
-      }
-      .hero h2 {
-        font-size: 1.8rem;
-      }
-      .hero p {
-        font-size: 0.9rem;
-      }
-      .icon-title {
-        font-size: 2rem;
-      }
-      .tabs {
-        gap: 8px;
-      }
-      .tab {
-        font-size: 0.9rem;
-        padding: 0.15rem 0.4rem;
-      }
-      .api-list {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      .api-info h3 {
-        font-size: 1rem;
-      }
-      .api-info p {
-        font-size: 0.85rem;
-      }
-      .brand {
-        font-size: 1.1rem;
-      }
-      .navbar-right .nav-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
-      }
-      .modal-body {
-        padding: 15px;
-      }
-      .copy-section {
-        font-size: 0.8rem;
-        padding: 8px 10px;
-      }
-      .copy-button {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-      }
-      .modal-body form input {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-      }
-      #submitParamBtn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-      }
-      .footer .contact a {
-        font-size: 1.5rem;
-        width: 40px;
-        height: 40px;
-      }
+      .hero { padding: 50px 15px; }
+      .hero h2 { font-size: 2.2rem; letter-spacing: -1px; }
+      .hero p { font-size: 1rem; }
+      .icon-title { font-size: 2.5rem; margin-right: 10px; }
+      .tabs { gap: 10px; padding: 10px; }
+      .tab { font-size: 0.9rem; padding: 0.25rem 0.5rem; }
+      .api-list { grid-template-columns: 1fr; gap: 20px; }
+      .api-info h3 { font-size: 1.1rem; }
+      .api-info p { font-size: 0.85rem; }
+      .brand { font-size: 1.3rem; }
+      .navbar-right .nav-icon { width: 35px; height: 35px; font-size: 1rem; }
+      .modal-header h5 { font-size: 1.3rem; }
+      .modal-header span { font-size: 0.85rem; }
+      .btn-close { width: 30px; height: 30px; font-size: 1.3rem; }
+      .modal-body { padding: 15px; }
+      .copy-section { font-size: 0.8rem; padding: 8px 12px; }
+      .copy-button { font-size: 0.8rem; padding: 6px 10px; margin-left: 10px; }
+      .modal-body form input { font-size: 0.9rem; padding: 10px 12px; }
+      #submitParamBtn { font-size: 0.9rem; padding: 10px 15px; }
+      .footer { padding: 1.5rem 15px; }
+      .footer .contact a { font-size: 1.5rem; width: 40px; height: 40px; }
     }
-
-    /* Additional styles for method tags (if you plan to use them) */
-    .method-get { background-color: #4CAF50; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
-    .method-post { background-color: #2196F3; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
-    .method-put { background-color: #FFC107; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
-    .method-delete { background-color: #F44336; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
-    .method-patch { background-color: #9C27B0; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
-  </style>
+</style>
 </head>
 <body>
   <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="loading-spinner-large"></div>
-    <div class="loading-text">Memuat Halaman...</div>
+    <div class="loading-text">Memuat Dunia Digital...</div>
   </div>
   
-  <header class="navbar">
+    <header class="navbar">
     <div class="navbar-container">
       <div class="navbar-left">
         <span id="navname" class="brand"></span>
       </div>
-      <div class="navbar-right">
+  <div class="navbar-right">
         <button id="themeToggle" class="nav-icon" aria-label="Toggle Theme">
           <i class="fas fa-moon"></i> 
         </button>
@@ -903,9 +954,8 @@
         <h2 id="apiTitle"></h2>
       </div>
       <p>MULTI FUNGSI REST API DENGAN INTEGRASI YANG MUDAH DAN MINIMALIS UNTUK PENGEMBANG BOT DAN WEBSITE</p>
-      <section id="apiLinks">
-        <!-- API links can be dynamically added here if needed -->
-      </section>
+          <section id="apiLinks">
+    </section>
     </section>
 
     <section class="content">
@@ -978,30 +1028,15 @@
     const apiList = document.getElementById("api-list");
     let currentEndpoint = "";
 
-    // Fetch settings and API endpoints
-    // In a real application, ensure these paths are correct relative to your server setup.
-    const settings = await fetch("/settings.json").then(res => res.json()).catch(() => ({
-      creatorName: "SkyLer",
-      apititle: "Skyzopedia API",
-      creator: "Skyzopedia",
-      github: "#",
-      whatsapp: "#",
-      youtube: "#"
-    }));
-    const apis = await fetch("/api/endpoints.json").then(res => res.json()).catch(() => ({
-      "General": [
-        { "name": "Example API 1", "path": "/api/example1?param1=value1", "desc": "Deskripsi singkat API ini.", "status": "Stable" },
-        { "name": "Example API 2", "path": "/api/example2", "desc": "API tanpa parameter.", "status": "Beta" },
-        { "name": "Example API 3", "path": "/api/example3?query=test", "desc": "API dalam pemeliharaan.", "status": "Maintenance" }
-      ]
-    }));
+    const settings = await fetch("/settings.json").then(res => res.json());
+    const apis = await fetch("/api/endpoints.json").then(res => res.json());
 
     const setContent = (id, property, value) => {
       const el = document.getElementById(id);
       if (el) el[property] = value;
     };
     
-    setContent("navname", "textContent", settings.creatorName || "SkyLer");
+    setContent("navname", "textContent", settings.creatorName || "VANN HOSTING");
     setContent("page", "textContent", "Docs - " + (settings.apititle || "Skyzopedia API"));
     setContent("credits", "textContent", `© ${new Date().getFullYear()} Powered by ${settings.creator || "Skyzopedia"}`);
     setContent("apiTitle", "textContent", settings.apititle || "Skyzopedia API");
@@ -1009,36 +1044,34 @@
     document.getElementById("githubLink").href = settings.github || "#";
     document.getElementById("whatsappLink").href = settings.whatsapp || "#";
     document.getElementById("youtubeLink").href = settings.youtube || "#";
-    
     const themeToggle = document.getElementById("themeToggle");
     const themeToggleIcon = themeToggle.querySelector("i");
     
-    // Theme logic
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.body.classList.add(savedTheme);
-      if (savedTheme === 'dark-theme') {
-        themeToggleIcon.classList.remove('fa-moon');
-        themeToggleIcon.classList.add('fa-sun');
-      }
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.classList.add('dark-theme');
+  if (savedTheme) {
+    document.body.classList.add(savedTheme);
+    if (savedTheme === 'dark-theme') {
       themeToggleIcon.classList.remove('fa-moon');
       themeToggleIcon.classList.add('fa-sun');
     }
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark-theme');
+    themeToggleIcon.classList.remove('fa-moon');
+    themeToggleIcon.classList.add('fa-sun');
+  }
 
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-theme');
-      if (document.body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark-theme');
-        themeToggleIcon.classList.remove('fa-moon');
-        themeToggleIcon.classList.add('fa-sun');
-      } else {
-        localStorage.setItem('theme', 'light-theme');
-        themeToggleIcon.classList.remove('fa-sun');
-        themeToggleIcon.classList.add('fa-moon');
-      }
-    });
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    if (document.body.classList.contains('dark-theme')) {
+      localStorage.setItem('theme', 'dark-theme');
+      themeToggleIcon.classList.remove('fa-moon');
+      themeToggleIcon.classList.add('fa-sun');
+    } else {
+      localStorage.setItem('theme', 'light-theme');
+      themeToggleIcon.classList.remove('fa-sun');
+      themeToggleIcon.classList.add('fa-moon');
+    }
+  });
   
     // Create tabs
     Object.keys(apis).forEach((key, index) => {
@@ -1052,28 +1085,23 @@
     // Render API cards
     function renderAPIs(category) {
       apiList.innerHTML = "";
-      if (!apis[category] || apis[category].length === 0) {
-        apiList.innerHTML = `<p class="text-center" style="color: var(--text-color-light);">Tidak ada API di kategori ini.</p>`;
-        return;
-      }
-
       apis[category].sort((a, b) => a.name.localeCompare(b.name)).forEach((api, i) => {
         const card = document.createElement("div");
         card.className = "api-card";
         
         // Determine status class
         let statusClass = "";
-        if (api.status && api.status.toLowerCase().includes("maintenance")) statusClass = "danger";
-        else if (api.status && api.status.toLowerCase().includes("beta")) statusClass = "warning";
-        else statusClass = "info"; // Default to info for stable/other statuses
+        if (api.status.toLowerCase().includes("maintenance")) statusClass = "danger";
+        else if (api.status.toLowerCase().includes("beta")) statusClass = "warning";
+        else statusClass = "";
         
         card.innerHTML = `
           <div class="api-info">
             <h3>${api.name}</h3>
             ${api.desc ? `<p>${api.desc}</p>` : "" }
-            <span class="status ${statusClass}">${api.status || 'Unknown'}</span>
+            <span class="status ${statusClass}">${api.status}</span>
           </div>
-          <button class="play-button" data-endpoint="${api.path}" data-api="${api.name}" data-desc="${api.desc || ''}">
+          <button class="play-button" data-endpoint="${api.path}" data-api="${api.name}" data-desc="${api.desc}">
             <i class="fa-solid fa-play"></i> Try API
           </button>
         `;
@@ -1098,7 +1126,7 @@
       }
     });
 
-    // Event listeners for modal interactions
+    // Event listeners
     document.addEventListener("click", (e) => {
       // Play button click
       if (e.target.closest(".play-button")) {
@@ -1157,9 +1185,6 @@
           setTimeout(() => {
             copyBtn.innerHTML = '<i class="far fa-copy"></i>';
           }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy text: ', err);
-          alert('Gagal menyalin teks. Silakan salin secara manual.');
         });
       }
       
@@ -1175,7 +1200,7 @@
       const submitBtn = document.getElementById("submitParamBtn");
       
       if (!form.checkValidity()) {
-        form.reportValidity(); // Show browser's validation messages
+        form.reportValidity();
         return;
       }
 
@@ -1195,33 +1220,29 @@
     });
   }    
 
-  // Function to fetch API and display response
-  async function fetchAPI(endpoint) {
-    const fullURL = window.location.origin + endpoint;
-    const responseEl = document.getElementById("apiResponseContent");
-    const loadingEl = document.getElementById("apiResponseLoading");
-    const paramForm = document.getElementById("paramForm");
-    const submitBtn = document.getElementById("submitParamBtn");
+function fetchAPI(endpoint) {
+  const fullURL = window.location.origin + endpoint;
+  const responseEl = document.getElementById("apiResponseContent");
+  const loadingEl = document.getElementById("apiResponseLoading");
+  const paramForm = document.getElementById("paramForm");
+  const submitBtn = document.getElementById("submitParamBtn");
+  const modal = document.getElementById("apiResponseModal");
 
-    // Show loading state
-    paramForm.style.display = "none";
-    submitBtn.style.display = "none";
-    loadingEl.style.display = "block";
-    responseEl.classList.add("d-none");
-    responseEl.innerHTML = "";
-    document.querySelector(".copy-section").classList.add("active");
-    document.getElementById("copyEndpointText").innerText = fullURL;
+  // Show loading state
+  paramForm.style.display = "none";
+  submitBtn.style.display = "none";
+  loadingEl.style.display = "block";
+  responseEl.classList.add("d-none");
+  responseEl.innerHTML = "";
+  document.querySelector(".copy-section").classList.add("active");
+  document.getElementById("copyEndpointText").innerText = fullURL;
 
-    try {
-      const res = await fetch(fullURL);
+  fetch(fullURL)
+    .then(async (res) => {
       loadingEl.style.display = "none";
       const contentType = res.headers.get("content-type");
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        responseEl.innerHTML = `<pre style="color: var(--danger);">Error ${res.status}: ${res.statusText}\n${errorText.substring(0, 500)}</pre>`;
-      } 
-      else if (contentType && contentType.includes("application/json")) {
+      if (contentType && contentType.includes("application/json")) {
         const data = await res.json();
         responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
       } 
@@ -1252,16 +1273,17 @@
       }
       else {
         const text = await res.text();
-        responseEl.innerHTML = `<pre>${text.substring(0, 1000)}</pre>`; // Limit text length for display
+        responseEl.innerHTML = `<pre>${text.substring(0, 1000)}</pre>`;
       }
 
       responseEl.classList.remove("d-none");
-    } catch (err) {
+    })
+    .catch((err) => {
       loadingEl.style.display = "none";
       responseEl.classList.remove("d-none");
-      responseEl.innerHTML = `<pre style="color: var(--danger);">Fetch Error: ${err.message}</pre>`;
-    }
-  }
+      responseEl.innerHTML = `<pre>Error: ${err.message}</pre>`;
+    });
+}
   </script>
 </body>
 </html>
