@@ -9,352 +9,871 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* ===== Base Theme Variables (Light Theme) ===== */
-:root {
-  /* ... (variabel yang sudah ada) ... */
-  --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.08); /* Stronger shadow */
-  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 15px 15px -5px rgba(0, 0, 0, 0.1); /* Even larger shadow */
-  --card-border-hover: var(--primary); /* New variable for hover border */
-  --card-gradient-border: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* New gradient border */
-}
+    /* ===== Base Theme Variables (Light Theme) ===== */
+    :root {
+      --primary: #6a0dad; /* Deep Purple */
+      --primary-dark: #4a0080; /* Darker Purple */
+      --primary-light: #9c27b0; /* Lighter Purple */
+      --secondary: #00bcd4; /* Cyan */
+      --accent: #ffeb3b; /* Yellow */
+      --text-color: #333;
+      --text-color-light: #666;
+      --bg-color: #f0f2f5; /* Light Gray Blue */
+      --bg-light: #ffffff; /* White */
+      --bg-lighter: #fdfdff; /* Off-white */
+      --border-color: #e0e0e0;
+      --success: #4CAF50;
+      --warning: #FFC107;
+      --danger: #F44336;
+      --info: #2196F3;
 
-/* ===== Dark Theme Variables ===== */
-body.dark-theme {
-  /* ... (variabel yang sudah ada) ... */
-  --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 15px 15px -5px rgba(0, 0, 0, 0.3);
-  --card-border-hover: var(--primary-light); /* Adjust for dark theme */
-}
+      --font-family: 'Poppins', sans-serif;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
 
-/* ===== General Styles ===== */
-body {
-  /* ... (yang sudah ada) ... */
-  /* Tambahkan gradien latar belakang halus */
-  background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%);
-  background-attachment: fixed; /* Agar gradien tetap saat scroll */
-}
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 15px 15px -5px rgba(0, 0, 0, 0.1); /* Even larger shadow */
+      --card-border-hover: var(--primary); /* New variable for hover border */
+      --card-gradient-border: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* New gradient border */
+    }
 
-/* ===== Loading Screen Styles ===== */
-#loading-screen {
-  /* ... (yang sudah ada) ... */
-  background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%); /* Sesuaikan dengan body */
-}
+    /* ===== Dark Theme Variables ===== */
+    body.dark-theme {
+      --primary: #bb86fc; /* Light Purple for Dark Theme */
+      --primary-dark: #3700b3;
+      --primary-light: #bb86fc;
+      --secondary: #03dac6; /* Teal for Dark Theme */
+      --accent: #ffe082;
+      --text-color: #e0e0e0;
+      --text-color-light: #b0b0b0;
+      --bg-color: #121212; /* Dark Gray */
+      --bg-light: #1e1e1e; /* Slightly Lighter Dark Gray */
+      --bg-lighter: #2c2c2c; /* Even Lighter Dark Gray */
+      --border-color: #3a3a3a;
+      --success: #66bb6a;
+      --warning: #ffee58;
+      --danger: #ef5350;
+      --info: #64b5f6;
 
-.loading-spinner-large {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Tambahkan bayangan */
-}
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 15px 15px -5px rgba(0, 0, 0, 0.3);
+      --card-border-hover: var(--primary-light); /* Adjust for dark theme */
+    }
 
-/* ===== Form Styles ===== */
-.modal-body form input {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Tambahkan bayangan pada input */
-}
+    /* ===== General Styles ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.modal-body form input:focus {
-  /* ... (yang sudah ada) ... */
-  box-shadow: 0 0 0 3px var(--primary-light); /* Efek fokus yang lebih menonjol */
-}
+    body {
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%); /* Smooth background gradient */
+      background-attachment: fixed; /* Keep gradient fixed during scroll */
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-#submitParamBtn {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-md); /* Bayangan pada tombol submit */
-}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      flex-grow: 1;
+    }
 
-#submitParamBtn:hover {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-lg); /* Bayangan lebih besar saat hover */
-}
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-/* ===== Modal Styles ===== */
-.modal-dialog {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-lg); /* Bayangan kuat untuk modal */
-  border: none; /* Hapus border default, kita akan pakai border gradien */
-  position: relative; /* Untuk pseudo-element border */
-  overflow: hidden; /* Pastikan gradien border tidak keluar */
-}
+    a:hover {
+      color: var(--primary-dark);
+    }
 
-/* Tambahkan border gradien pada modal */
-.modal-dialog::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--border-radius);
-  padding: 2px; /* Ketebalan border */
-  background: var(--card-gradient-border); /* Gunakan gradien border */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none; /* Pastikan tidak mengganggu interaksi */
-}
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      font-family: var(--font-family);
+    }
 
-.btn-close {
-  /* ... (yang sudah ada) ... */
-  background: var(--bg-lighter); /* Beri latar belakang agar lebih menonjol */
-  border-radius: 50%;
-  box-shadow: var(--shadow-sm);
-}
+    /* Utility Classes */
+    .d-none {
+      display: none !important;
+    }
 
-.btn-close:hover {
-  /* ... (yang sudah ada) ... */
-  background: var(--danger); /* Warna latar belakang saat hover */
-  color: white;
-  transform: rotate(180deg) scale(1.1); /* Animasi putar dan sedikit membesar */
-}
+    .text-center {
+      text-align: center;
+    }
 
-/* ===== Page Sections ===== */
-.hero h2 {
-  /* ... (yang sudah ada) ... */
-  font-size: 2.8rem; /* Ukuran font lebih besar */
-  letter-spacing: -1px; /* Sedikit rapat */
-  line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Tambahkan sedikit bayangan teks */
-}
+    .fade-in {
+      animation: fadeIn 1s ease-out forwards;
+    }
 
-.hero p {
-  /* ... (yang sudah ada) ... */
-  font-size: 1.15rem; /* Ukuran font lebih besar */
-  max-width: 700px; /* Batasi lebar untuk keterbacaan */
-  margin-left: auto;
-  margin-right: auto;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-.icon-title {
-  font-size: 3rem; /* Ukuran ikon lebih besar */
-  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2)); /* Bayangan untuk efek 3D */
-}
+    /* ===== Loading Screen Styles ===== */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-light) 100%); /* Match body gradient */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
 
-/* ===== Tabs ===== */
-.tab {
-  /* ... (yang sudah ada) ... */
-  font-size: 1.05rem; /* Ukuran font tab lebih besar */
-  padding: 0.2rem 0.5rem; /* Padding sedikit lebih besar */
-  position: relative;
-  overflow: hidden; /* Untuk efek hover */
-}
+    .loading-spinner-large {
+      width: 80px;
+      height: 80px;
+      border: 8px solid var(--primary-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      box-shadow: var(--shadow-sm); /* Add shadow */
+    }
 
-.tab::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--primary-light); /* Warna latar belakang saat hover */
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  z-index: -1;
-  border-radius: var(--border-radius-sm); /* Sudut membulat */
-}
+    .loading-text {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
 
-.tab:hover:not(.active)::before {
-  transform: scaleX(1);
-  opacity: 0.1; /* Opasitas rendah */
-}
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
-.tab.active {
-  border-bottom: none; /* Hapus border bawah */
-  background: var(--primary); /* Latar belakang solid untuk tab aktif */
-  color: white; /* Teks putih */
-  border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-sm); /* Bayangan untuk tab aktif */
-  transform: translateY(-2px); /* Sedikit naik */
-}
+    /* ===== Navbar Styles ===== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+      backdrop-filter: blur(10px); /* Stronger blur effect */
+      padding: 15px 20px;
+      box-shadow: var(--shadow-sm); /* Shadow on navbar */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.tab.active::before {
-  display: none; /* Sembunyikan pseudo-element untuk tab aktif */
-}
+    body.dark-theme .navbar {
+      background: rgba(15, 23, 42, 0.8); /* Semi-transparent for dark theme */
+    }
 
-.tab:after {
-  display: none; /* Hapus efek after yang lama */
-}
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-/* ===== API Cards ===== */
-.api-card {
-  /* ... (yang sudah ada) ... */
-  border: 1px solid var(--border-color); /* Border default */
-  box-shadow: var(--shadow-sm); /* Bayangan default */
-  transform: perspective(1000px) rotateY(0deg) scale(1); /* Untuk efek 3D */
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transisi lebih halus */
-  position: relative;
-  overflow: hidden;
-}
+    .brand {
+      font-size: 1.5rem; /* Larger brand font size */
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow */
+      transition: color 0.3s ease;
+    }
 
-.api-card:hover {
-  transform: perspective(1000px) rotateY(3deg) scale(1.02); /* Sedikit putar dan membesar */
-  border-color: transparent; /* Hapus border default saat hover */
-  box-shadow: var(--shadow-md); /* Bayangan lebih besar saat hover */
-}
+    .navbar-right {
+      display: flex;
+      gap: 15px;
+    }
 
-/* Tambahkan border gradien saat hover pada kartu */
-.api-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--border-radius);
-  padding: 2px; /* Ketebalan border */
-  background: var(--card-gradient-border); /* Gunakan gradien border */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0; /* Sembunyikan secara default */
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
+    .navbar-right .nav-icon {
+      background: var(--bg-light);
+      color: var(--text-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm); /* Shadow on navbar icon */
+    }
 
-.api-card:hover::before {
-  opacity: 1; /* Tampilkan saat hover */
-}
+    .navbar-right .nav-icon:hover {
+      background: var(--primary-light);
+      color: white;
+      box-shadow: var(--shadow-md); /* Larger shadow on hover */
+      transform: translateY(-4px) rotate(5deg); /* Lift and slight rotate animation */
+    }
 
-.api-info h3 {
-  /* ... (yang sudah ada) ... */
-  font-size: 1.15rem; /* Ukuran font lebih besar */
-}
+    /* Theme Toggle Button */
+    #themeToggle {
+      box-shadow: var(--shadow-sm); /* Shadow on theme toggle button */
+    }
 
-.api-info p {
-  /* ... (yang sudah ada) ... */
-  font-size: 0.95rem; /* Ukuran font lebih besar */
-}
+    #themeToggle:hover {
+      box-shadow: var(--shadow-md); /* Larger shadow on hover */
+      transform: translateY(-3px) rotate(15deg); /* Lift and rotate animation */
+    }
 
-.play-button {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Bayangan pada tombol play */
-  background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Gradien pada tombol */
-  transform: translateZ(0); /* Untuk memastikan efek 3D */
-}
+    /* ===== Page Sections ===== */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      margin-top: 30px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-.play-button:hover {
-  background: linear-gradient(45deg, var(--primary-dark), var(--primary)); /* Balik gradien saat hover */
-  transform: translateY(-3px) translateZ(10px); /* Sedikit naik dan maju */
-  box-shadow: var(--shadow-md); /* Bayangan lebih besar */
-}
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+      opacity: 0.1;
+      border-radius: 50%;
+      animation: float1 10s infinite ease-in-out;
+      z-index: -1;
+    }
 
-/* Navbar Styles */
-.navbar {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Bayangan pada navbar */
-  backdrop-filter: blur(10px); /* Efek blur yang lebih kuat */
-  background: rgba(255, 255, 255, 0.8); /* Latar belakang semi-transparan */
-}
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+      opacity: 0.1;
+      border-radius: 50%;
+      animation: float2 12s infinite ease-in-out;
+      z-index: -1;
+    }
 
-body.dark-theme .navbar {
-  background: rgba(15, 23, 42, 0.8); /* Latar belakang semi-transparan untuk dark theme */
-}
+    @keyframes float1 {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(20px, 30px); }
+      100% { transform: translate(0, 0); }
+    }
 
-.brand {
-  /* ... (yang sudah ada) ... */
-  font-size: 1.5rem; /* Ukuran brand lebih besar */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Bayangan teks */
-}
+    @keyframes float2 {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-20px, -30px); }
+      100% { transform: translate(0, 0); }
+    }
 
-.navbar-right .nav-icon {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Bayangan pada ikon navbar */
-}
+    .title-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
-.navbar-right .nav-icon:hover {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-md); /* Bayangan lebih besar saat hover */
-  transform: translateY(-4px) rotate(5deg); /* Animasi naik dan sedikit putar */
-}
+    .icon-title {
+      font-size: 3rem; /* Larger icon size */
+      color: var(--primary);
+      margin-right: 15px;
+      filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2)); /* Shadow for 3D effect */
+      transition: transform 0.3s ease;
+    }
 
-/* Theme Toggle Button */
-#themeToggle {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Bayangan pada tombol tema */
-}
+    .icon-title:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
 
-#themeToggle:hover {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-md); /* Bayangan lebih besar saat hover */
-  transform: translateY(-3px) rotate(15deg); /* Animasi naik dan putar */
-}
+    .hero h2 {
+      font-size: 2.8rem; /* Larger font size */
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      letter-spacing: -1px; /* Slightly tighter spacing */
+      line-height: 1.2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Add slight text shadow */
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block; /* Needed for text gradient */
+    }
 
-/* Footer Styles */
-footer {
-  /* ... (yang sudah ada) ... */
-  box-shadow: 0 -5px 15px -5px rgba(0, 0, 0, 0.05); /* Bayangan di atas footer */
-  background: var(--bg-light); /* Latar belakang footer */
-  padding-top: 1.5rem; /* Padding atas lebih besar */
-  padding-bottom: 1.5rem; /* Padding bawah lebih besar */
-}
+    body.dark-theme .hero h2 {
+      background: linear-gradient(45deg, var(--primary-light), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-footer .contact a {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-sm); /* Bayangan pada ikon kontak */
-}
+    .hero p {
+      font-size: 1.15rem; /* Larger font size */
+      color: var(--text-color-light);
+      max-width: 700px; /* Limit width for readability */
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 30px;
+    }
 
-footer .contact a:hover {
-  /* ... (yang sudah ada) ... */
-  box-shadow: var(--shadow-md); /* Bayangan lebih besar saat hover */
-  transform: translateY(-6px) scale(1.1); /* Animasi naik dan membesar */
-}
+    #apiLinks {
+      margin-top: 20px;
+    }
 
-/* Responsive adjustments for larger fonts and shadows */
-@media (max-width: 768px) {
-  .hero h2 {
-    font-size: 2.2rem;
-  }
-  .hero p {
-    font-size: 1rem;
-  }
-  .icon-title {
-    font-size: 2.5rem;
-  }
-  .tab {
-    font-size: 0.95rem;
-  }
-  .api-info h3 {
-    font-size: 1.05rem;
-  }
-  .api-info p {
-    font-size: 0.88rem;
-  }
-  .brand {
-    font-size: 1.2rem;
-  }
-}
+    /* ===== Tabs ===== */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
 
-@media (max-width: 480px) {
-  .hero h2 {
-    font-size: 1.8rem;
-  }
-  .hero p {
-    font-size: 0.9rem;
-  }
-  .icon-title {
-    font-size: 2rem;
-  }
-  .tab {
-    font-size: 0.9rem;
-  }
-  .api-info h3 {
-    font-size: 1rem;
-  }
-  .api-info p {
-    font-size: 0.85rem;
-  }
-  .brand {
-    font-size: 1.1rem;
-  }
-}
+    .tab {
+      background: var(--bg-light);
+      color: var(--text-color);
+      padding: 0.2rem 0.5rem; /* Slightly larger padding */
+      border-radius: var(--border-radius-sm);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden; /* For hover effect */
+      font-size: 1.05rem; /* Larger tab font size */
+      box-shadow: var(--shadow-sm);
+    }
 
-.method-get { } 
-.method-post { }
-.method-put { }
-.method-delete { }
-.method-patch { }
+    .tab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-light); /* Background color on hover */
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: -1;
+      border-radius: var(--border-radius-sm); /* Rounded corners */
+    }
+
+    .tab:hover:not(.active)::before {
+      transform: scaleX(1);
+      opacity: 0.1; /* Low opacity */
+    }
+
+    .tab.active {
+      border-bottom: none; /* Remove bottom border */
+      background: var(--primary); /* Solid background for active tab */
+      color: white; /* White text */
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--shadow-sm); /* Shadow for active tab */
+      transform: translateY(-2px); /* Slightly lift */
+    }
+
+    .tab.active::before {
+      display: none; /* Hide pseudo-element for active tab */
+    }
+
+    .tab:after {
+      display: none; /* Remove old after effect */
+    }
+
+    /* ===== API Cards ===== */
+    .api-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 20px 0;
+    }
+
+    .api-card {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-color); /* Default border */
+      box-shadow: var(--shadow-sm); /* Default shadow */
+      transform: perspective(1000px) rotateY(0deg) scale(1); /* For 3D effect */
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+      position: relative;
+      overflow: hidden;
+      animation: cardEntrance 0.6s ease-out forwards; /* Initial animation */
+    }
+
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(30px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .api-card:hover {
+      transform: perspective(1000px) rotateY(3deg) scale(1.02); /* Slight rotate and enlarge */
+      border-color: transparent; /* Remove default border on hover */
+      box-shadow: var(--shadow-md); /* Larger shadow on hover */
+    }
+
+    /* Add gradient border on hover for cards */
+    .api-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: var(--border-radius);
+      padding: 2px; /* Border thickness */
+      background: var(--card-gradient-border); /* Use gradient border */
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0; /* Hidden by default */
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .api-card:hover::before {
+      opacity: 1; /* Show on hover */
+    }
+
+    .api-info h3 {
+      font-size: 1.15rem; /* Larger font size */
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .api-info p {
+      font-size: 0.95rem; /* Larger font size */
+      color: var(--text-color-light);
+      margin-bottom: 15px;
+    }
+
+    .api-info .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 10px;
+      color: white;
+      background-color: var(--info); /* Default status color */
+    }
+
+    .api-info .status.danger {
+      background-color: var(--danger);
+    }
+
+    .api-info .status.warning {
+      background-color: var(--warning);
+    }
+
+    .play-button {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Gradient on button */
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--border-radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-sm); /* Shadow on play button */
+      transition: all 0.3s ease;
+      transform: translateZ(0); /* Ensure 3D effect */
+    }
+
+    .play-button:hover {
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary)); /* Reverse gradient on hover */
+      transform: translateY(-3px) translateZ(10px); /* Lift and move forward slightly */
+      box-shadow: var(--shadow-md); /* Larger shadow */
+    }
+
+    /* ===== Modal Styles ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 2000;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-dialog {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 700px;
+      box-shadow: var(--shadow-lg); /* Strong shadow for modal */
+      border: none; /* Remove default border, we'll use gradient border */
+      position: relative; /* For pseudo-element border */
+      overflow: hidden; /* Ensure gradient border doesn't overflow */
+      transform: translateY(-50px) scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal.active .modal-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Add gradient border to modal */
+    .modal-dialog::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: var(--border-radius);
+      padding: 2px; /* Border thickness */
+      background: var(--card-gradient-border); /* Use gradient border */
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none; /* Ensure it doesn't interfere with interaction */
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px 25px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-header h5 {
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+    }
+
+    .modal-header span {
+      font-size: 0.9rem;
+      color: var(--text-color-light);
+    }
+
+    .btn-close {
+      background: var(--bg-lighter); /* Background for prominence */
+      color: var(--text-color);
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-close:hover {
+      background: var(--danger); /* Background color on hover */
+      color: white;
+      transform: rotate(180deg) scale(1.1); /* Rotate and slightly enlarge animation */
+    }
+
+    .modal-body {
+      padding: 25px;
+    }
+
+    .copy-section {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      word-break: break-all;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .copy-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .copy-button {
+      background: var(--primary);
+      color: white;
+      padding: 8px 12px;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.9rem;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .copy-button:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    .modal-body form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--bg-lighter);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-sm); /* Add shadow to input */
+    }
+
+    .modal-body form input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light); /* More prominent focus effect */
+    }
+
+    #submitParamBtn {
+      background: var(--primary);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--border-radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      width: 100%;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md); /* Shadow on submit button */
+    }
+
+    #submitParamBtn:hover {
+      background: var(--primary-dark);
+      box-shadow: var(--shadow-lg); /* Larger shadow on hover */
+      transform: translateY(-2px);
+    }
+
+    .loading-spinner {
+      border: 4px solid var(--primary-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 0.8s linear infinite;
+      margin: 20px auto;
+    }
+
+    #apiResponseContent {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace; /* Monospace font for code */
+      font-size: 0.9rem;
+      color: var(--text-color);
+      white-space: pre-wrap; /* Preserve whitespace and wrap text */
+      word-break: break-all;
+    }
+
+    #apiResponseContent pre {
+      margin: 0;
+    }
+
+    #apiResponseContent img,
+    #apiResponseContent video,
+    #apiResponseContent audio {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== Footer Styles ===== */
+    .footer {
+      background: var(--bg-light); /* Footer background */
+      padding: 1.5rem 20px; /* Larger top/bottom padding */
+      text-align: center;
+      color: var(--text-color-light);
+      font-size: 0.9rem;
+      margin-top: 40px;
+      box-shadow: 0 -5px 15px -5px rgba(0, 0, 0, 0.05); /* Shadow above footer */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .footer #credits {
+      margin-bottom: 15px;
+    }
+
+    .footer .contact {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer .contact a {
+      color: var(--text-color);
+      font-size: 1.8rem;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-color);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm); /* Shadow on contact icon */
+    }
+
+    .footer .contact a:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+      color: white;
+      box-shadow: var(--shadow-md); /* Larger shadow on hover */
+      transform: translateY(-6px) scale(1.1); /* Lift and enlarge animation */
+    }
+
+    /* Responsive adjustments for larger fonts and shadows */
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .icon-title {
+        font-size: 2.5rem;
+      }
+      .tab {
+        font-size: 0.95rem;
+      }
+      .api-info h3 {
+        font-size: 1.05rem;
+      }
+      .api-info p {
+        font-size: 0.88rem;
+      }
+      .brand {
+        font-size: 1.2rem;
+      }
+      .navbar-right .nav-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
+      .modal-header h5 {
+        font-size: 1.2rem;
+      }
+      .btn-close {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 15px;
+      }
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+      .icon-title {
+        font-size: 2rem;
+      }
+      .tabs {
+        gap: 8px;
+      }
+      .tab {
+        font-size: 0.9rem;
+        padding: 0.15rem 0.4rem;
+      }
+      .api-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .api-info h3 {
+        font-size: 1rem;
+      }
+      .api-info p {
+        font-size: 0.85rem;
+      }
+      .brand {
+        font-size: 1.1rem;
+      }
+      .navbar-right .nav-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+      }
+      .modal-body {
+        padding: 15px;
+      }
+      .copy-section {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+      }
+      .copy-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      .modal-body form input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      #submitParamBtn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+      .footer .contact a {
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* Additional styles for method tags (if you plan to use them) */
+    .method-get { background-color: #4CAF50; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
+    .method-post { background-color: #2196F3; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
+    .method-put { background-color: #FFC107; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
+    .method-delete { background-color: #F44336; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
+    .method-patch { background-color: #9C27B0; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8em; }
   </style>
 </head>
 <body>
@@ -364,12 +883,12 @@ footer .contact a:hover {
     <div class="loading-text">Memuat Halaman...</div>
   </div>
   
-    <header class="navbar">
+  <header class="navbar">
     <div class="navbar-container">
       <div class="navbar-left">
         <span id="navname" class="brand"></span>
       </div>
-  <div class="navbar-right">
+      <div class="navbar-right">
         <button id="themeToggle" class="nav-icon" aria-label="Toggle Theme">
           <i class="fas fa-moon"></i> 
         </button>
@@ -384,8 +903,9 @@ footer .contact a:hover {
         <h2 id="apiTitle"></h2>
       </div>
       <p>MULTI FUNGSI REST API DENGAN INTEGRASI YANG MUDAH DAN MINIMALIS UNTUK PENGEMBANG BOT DAN WEBSITE</p>
-          <section id="apiLinks">
-    </section>
+      <section id="apiLinks">
+        <!-- API links can be dynamically added here if needed -->
+      </section>
     </section>
 
     <section class="content">
@@ -458,8 +978,23 @@ footer .contact a:hover {
     const apiList = document.getElementById("api-list");
     let currentEndpoint = "";
 
-    const settings = await fetch("/settings.json").then(res => res.json());
-    const apis = await fetch("/api/endpoints.json").then(res => res.json());
+    // Fetch settings and API endpoints
+    // In a real application, ensure these paths are correct relative to your server setup.
+    const settings = await fetch("/settings.json").then(res => res.json()).catch(() => ({
+      creatorName: "SkyLer",
+      apititle: "Skyzopedia API",
+      creator: "Skyzopedia",
+      github: "#",
+      whatsapp: "#",
+      youtube: "#"
+    }));
+    const apis = await fetch("/api/endpoints.json").then(res => res.json()).catch(() => ({
+      "General": [
+        { "name": "Example API 1", "path": "/api/example1?param1=value1", "desc": "Deskripsi singkat API ini.", "status": "Stable" },
+        { "name": "Example API 2", "path": "/api/example2", "desc": "API tanpa parameter.", "status": "Beta" },
+        { "name": "Example API 3", "path": "/api/example3?query=test", "desc": "API dalam pemeliharaan.", "status": "Maintenance" }
+      ]
+    }));
 
     const setContent = (id, property, value) => {
       const el = document.getElementById(id);
@@ -474,34 +1009,36 @@ footer .contact a:hover {
     document.getElementById("githubLink").href = settings.github || "#";
     document.getElementById("whatsappLink").href = settings.whatsapp || "#";
     document.getElementById("youtubeLink").href = settings.youtube || "#";
+    
     const themeToggle = document.getElementById("themeToggle");
     const themeToggleIcon = themeToggle.querySelector("i");
     
+    // Theme logic
     const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    document.body.classList.add(savedTheme);
-    if (savedTheme === 'dark-theme') {
+    if (savedTheme) {
+      document.body.classList.add(savedTheme);
+      if (savedTheme === 'dark-theme') {
+        themeToggleIcon.classList.remove('fa-moon');
+        themeToggleIcon.classList.add('fa-sun');
+      }
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark-theme');
       themeToggleIcon.classList.remove('fa-moon');
       themeToggleIcon.classList.add('fa-sun');
     }
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.body.classList.add('dark-theme');
-    themeToggleIcon.classList.remove('fa-moon');
-    themeToggleIcon.classList.add('fa-sun');
-  }
 
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    if (document.body.classList.contains('dark-theme')) {
-      localStorage.setItem('theme', 'dark-theme');
-      themeToggleIcon.classList.remove('fa-moon');
-      themeToggleIcon.classList.add('fa-sun');
-    } else {
-      localStorage.setItem('theme', 'light-theme');
-      themeToggleIcon.classList.remove('fa-sun');
-      themeToggleIcon.classList.add('fa-moon');
-    }
-  });
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-theme');
+      if (document.body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark-theme');
+        themeToggleIcon.classList.remove('fa-moon');
+        themeToggleIcon.classList.add('fa-sun');
+      } else {
+        localStorage.setItem('theme', 'light-theme');
+        themeToggleIcon.classList.remove('fa-sun');
+        themeToggleIcon.classList.add('fa-moon');
+      }
+    });
   
     // Create tabs
     Object.keys(apis).forEach((key, index) => {
@@ -515,23 +1052,28 @@ footer .contact a:hover {
     // Render API cards
     function renderAPIs(category) {
       apiList.innerHTML = "";
+      if (!apis[category] || apis[category].length === 0) {
+        apiList.innerHTML = `<p class="text-center" style="color: var(--text-color-light);">Tidak ada API di kategori ini.</p>`;
+        return;
+      }
+
       apis[category].sort((a, b) => a.name.localeCompare(b.name)).forEach((api, i) => {
         const card = document.createElement("div");
         card.className = "api-card";
         
         // Determine status class
         let statusClass = "";
-        if (api.status.toLowerCase().includes("maintenance")) statusClass = "danger";
-        else if (api.status.toLowerCase().includes("beta")) statusClass = "warning";
-        else statusClass = "";
+        if (api.status && api.status.toLowerCase().includes("maintenance")) statusClass = "danger";
+        else if (api.status && api.status.toLowerCase().includes("beta")) statusClass = "warning";
+        else statusClass = "info"; // Default to info for stable/other statuses
         
         card.innerHTML = `
           <div class="api-info">
             <h3>${api.name}</h3>
             ${api.desc ? `<p>${api.desc}</p>` : "" }
-            <span class="status ${statusClass}">${api.status}</span>
+            <span class="status ${statusClass}">${api.status || 'Unknown'}</span>
           </div>
-          <button class="play-button" data-endpoint="${api.path}" data-api="${api.name}" data-desc="${api.desc}">
+          <button class="play-button" data-endpoint="${api.path}" data-api="${api.name}" data-desc="${api.desc || ''}">
             <i class="fa-solid fa-play"></i> Try API
           </button>
         `;
@@ -556,7 +1098,7 @@ footer .contact a:hover {
       }
     });
 
-    // Event listeners
+    // Event listeners for modal interactions
     document.addEventListener("click", (e) => {
       // Play button click
       if (e.target.closest(".play-button")) {
@@ -615,6 +1157,9 @@ footer .contact a:hover {
           setTimeout(() => {
             copyBtn.innerHTML = '<i class="far fa-copy"></i>';
           }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy text: ', err);
+          alert('Gagal menyalin teks. Silakan salin secara manual.');
         });
       }
       
@@ -630,7 +1175,7 @@ footer .contact a:hover {
       const submitBtn = document.getElementById("submitParamBtn");
       
       if (!form.checkValidity()) {
-        form.reportValidity();
+        form.reportValidity(); // Show browser's validation messages
         return;
       }
 
@@ -650,29 +1195,33 @@ footer .contact a:hover {
     });
   }    
 
-function fetchAPI(endpoint) {
-  const fullURL = window.location.origin + endpoint;
-  const responseEl = document.getElementById("apiResponseContent");
-  const loadingEl = document.getElementById("apiResponseLoading");
-  const paramForm = document.getElementById("paramForm");
-  const submitBtn = document.getElementById("submitParamBtn");
-  const modal = document.getElementById("apiResponseModal");
+  // Function to fetch API and display response
+  async function fetchAPI(endpoint) {
+    const fullURL = window.location.origin + endpoint;
+    const responseEl = document.getElementById("apiResponseContent");
+    const loadingEl = document.getElementById("apiResponseLoading");
+    const paramForm = document.getElementById("paramForm");
+    const submitBtn = document.getElementById("submitParamBtn");
 
-  // Show loading state
-  paramForm.style.display = "none";
-  submitBtn.style.display = "none";
-  loadingEl.style.display = "block";
-  responseEl.classList.add("d-none");
-  responseEl.innerHTML = "";
-  document.querySelector(".copy-section").classList.add("active");
-  document.getElementById("copyEndpointText").innerText = fullURL;
+    // Show loading state
+    paramForm.style.display = "none";
+    submitBtn.style.display = "none";
+    loadingEl.style.display = "block";
+    responseEl.classList.add("d-none");
+    responseEl.innerHTML = "";
+    document.querySelector(".copy-section").classList.add("active");
+    document.getElementById("copyEndpointText").innerText = fullURL;
 
-  fetch(fullURL)
-    .then(async (res) => {
+    try {
+      const res = await fetch(fullURL);
       loadingEl.style.display = "none";
       const contentType = res.headers.get("content-type");
 
-      if (contentType && contentType.includes("application/json")) {
+      if (!res.ok) {
+        const errorText = await res.text();
+        responseEl.innerHTML = `<pre style="color: var(--danger);">Error ${res.status}: ${res.statusText}\n${errorText.substring(0, 500)}</pre>`;
+      } 
+      else if (contentType && contentType.includes("application/json")) {
         const data = await res.json();
         responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
       } 
@@ -703,17 +1252,16 @@ function fetchAPI(endpoint) {
       }
       else {
         const text = await res.text();
-        responseEl.innerHTML = `<pre>${text.substring(0, 1000)}</pre>`;
+        responseEl.innerHTML = `<pre>${text.substring(0, 1000)}</pre>`; // Limit text length for display
       }
 
       responseEl.classList.remove("d-none");
-    })
-    .catch((err) => {
+    } catch (err) {
       loadingEl.style.display = "none";
       responseEl.classList.remove("d-none");
-      responseEl.innerHTML = `<pre>Error: ${err.message}</pre>`;
-    });
-}
+      responseEl.innerHTML = `<pre style="color: var(--danger);">Fetch Error: ${err.message}</pre>`;
+    }
+  }
   </script>
 </body>
 </html>
