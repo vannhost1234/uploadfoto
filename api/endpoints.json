@@ -79,14 +79,14 @@
   ],
   "cloudflare": [
     {
-      "name": "Create or Update Subdomain",
-      "desc": "Create or Update DNS Record on Cloudflare (supports all record types)",
+      "name": "Create Subdomain",
+      "desc": "Create Dns Record On Cloudflare",
       "status": "Active",
       "path": "/cloudflare/add-subdomain?subdomain=&content=&type=&zoneid=&token=&domain="
     },
     {
       "name": "Delete Subdomain",
-      "desc": "Delete DNS Record on Cloudflare",
+      "desc": "Delete Dns Record On Cloudflare",
       "status": "Active",
       "path": "/cloudflare/delete-subdomain?subdomain=&zoneid=&token=&domain="
     }
