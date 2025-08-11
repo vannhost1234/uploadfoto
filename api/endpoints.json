@@ -82,7 +82,7 @@
       "name": "Create Subdomain",
       "desc": "Create Dns Record On Cloudflare",
       "status": "Active",
-      "path": "/cloudflare/add-subdomain?subdomain=&content=&type=&zoneid=&token=&domain="
+      "path": "/cloudflare/add-subdomain?subdomain=&content=&type=&zoneid=&token=&domain=&pro"
     },
     {
       "name": "Delete Subdomain",
