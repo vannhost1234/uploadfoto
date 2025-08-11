@@ -82,13 +82,13 @@
        "name": "Create Subdomain",
        "desc": "Create Subdomain Cloudflare",
        "status": "Active",
-       "path": "/cloudflare/add-subdomain?apikey=&subdomain=&ip=&zoneid=&token=&domain="
+       "path": "/cloudflare/add-subdomain?subdomain=&ip=&zoneid=&token=&domain="
     },
     {
       "name": "Delete Subdomain",
       "desc": "Delete Subdomain Cloudflare",
       "status": "Active",
-      "path": "/cloudflare/delete-subdomain?apikey=&subdomain=&zoneid=&token=&domain="
+      "path": "/cloudflare/delete-subdomain?subdomain=&zoneid=&token=&domain="
     }
   ],
   "downloader": [
