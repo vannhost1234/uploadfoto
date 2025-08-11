@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 module.exports = function (app) {
 
   app.get('/cloudflare/add-subdomain', async (req, res) => {
-  const { subdomain, content, zoneid, token, domain, type } = req.query;
+  const { subdomain, content, zoneid, token, domain, type, proxied } = req.query;
 
   if (!subdomain || !content || !zoneid || !token || !domain) {
     return res.status(400).json({
@@ -12,10 +12,12 @@ module.exports = function (app) {
     });
   }
 
-  // Default type record jika tidak disertakan
+  // Default type record
   const recordType = type ? type.toUpperCase() : "A";
 
-  // Header untuk Cloudflare API
+  // Default proxied → false, bisa override dengan 'true' di query
+  const proxyStatus = proxied && proxied.toLowerCase() === "true";
+
   const headers = {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
@@ -23,35 +25,32 @@ module.exports = function (app) {
   };
 
   try {
-    // Cari dulu record tipe tertentu untuk subdomain ini
-    const find = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records?type=${recordType}&name=${subdomain}.${domain}`, { headers });
+    // Cari record yang sudah ada
+    const find = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records?type=${recordType}&name=${subdomain}.${domain}`,
+      { headers }
+    );
     const findJson = await find.json();
 
     if (!findJson.success) {
       return res.status(500).json({ status: false, error: "Gagal mencari subdomain", detail: findJson.errors });
     }
 
-    // Payload dasar
     const payload = {
       type: recordType,
       name: `${subdomain}.${domain}`,
       content: content,
       ttl: 3600,
-      proxied: false
+      proxied: proxyStatus
     };
 
-    // Kalau tipe MX dan SRV biasanya ada tambahan field, kalau mau bisa extend lagi ya
-
     if (findJson.result.length > 0) {
-      // Update jika record sudah ada
+      // Update record
       const recordId = findJson.result[0].id;
-
-      const update = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records/${recordId}`, {
-        method: "PUT",
-        headers,
-        body: JSON.stringify(payload)
-      });
-
+      const update = await fetch(
+        `https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records/${recordId}`,
+        { method: "PUT", headers, body: JSON.stringify(payload) }
+      );
       const updateJson = await update.json();
 
       if (!updateJson.success) {
@@ -62,17 +61,15 @@ module.exports = function (app) {
         status: true,
         message: "Subdomain berhasil diupdate",
         subdomain: `${subdomain}.${domain}`,
+        proxied: proxyStatus,
         result: updateJson.result
       });
-
     } else {
-      // Create baru kalau belum ada
-      const create = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(payload)
-      });
-
+      // Buat record baru
+      const create = await fetch(
+        `https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records`,
+        { method: "POST", headers, body: JSON.stringify(payload) }
+      );
       const createJson = await create.json();
 
       if (!createJson.success) {
@@ -83,10 +80,10 @@ module.exports = function (app) {
         status: true,
         message: "Subdomain berhasil ditambahkan",
         subdomain: `${subdomain}.${domain}`,
+        proxied: proxyStatus,
         result: createJson.result
       });
     }
-
   } catch (err) {
     return res.status(500).json({ status: false, error: "Terjadi kesalahan", detail: err.message });
   }
