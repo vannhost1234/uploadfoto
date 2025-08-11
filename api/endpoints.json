@@ -94,7 +94,7 @@
       "name": "Delete Semua Subdomain",
       "desc": "Delete Semua Dns Record On Cloudflare",
       "status": "Active",
-      "path": "/cloudflare/delete-all-subdomain?subdomain=&zoneid=&token=&domain="
+      "path": "/cloudflare/delete-all-subdomain?zoneid=&token=&domain="
     }
   ],
   "downloader": [
