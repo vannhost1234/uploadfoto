@@ -80,7 +80,7 @@
   "cloudflare": [
     {
       "name": "Create Subdomain",
-      "desc": "Create Dns Record On Cloudflare",
+      "desc": "Create Dns Record On Cloudflare Kalau Mau Nyalain Proxy Ketik true Matiin false",
       "status": "Active",
       "path": "/cloudflare/add-subdomain?subdomain=&content=&type=&zoneid=&token=&domain=&proxied"
     },
@@ -89,6 +89,12 @@
       "desc": "Delete Dns Record On Cloudflare",
       "status": "Active",
       "path": "/cloudflare/delete-subdomain?subdomain=&zoneid=&token=&domain="
+    },
+    {
+      "name": "Delete Semua Subdomain",
+      "desc": "Delete Semua Dns Record On Cloudflare",
+      "status": "Active",
+      "path": "/cloudflare/delete-all-subdomain?subdomain=&zoneid=&token=&domain="
     }
   ],
   "downloader": [

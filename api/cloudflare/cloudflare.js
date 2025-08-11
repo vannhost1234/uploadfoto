@@ -135,5 +135,65 @@ module.exports = function (app) {
       return res.status(500).json({ status: false, error: "Terjadi kesalahan", detail: err.message });
     }
   });
+  
+  app.get('/cloudflare/delete-all-subdomain', async (req, res) => {
+  const { zoneid, token, domain } = req.query;
+
+  if (!zoneid || !token || !domain) {
+    return res.status(400).json({
+      status: false,
+      error: "Parameter tidak lengkap. Wajib: zoneid, token, domain"
+    });
+  }
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+    Accept: "application/json"
+  };
+
+  try {
+    // Ambil semua record DNS di zone
+    const find = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records?per_page=100`,
+      { headers }
+    );
+    const list = await find.json();
+
+    if (!list.success) {
+      return res.status(500).json({ status: false, error: "Gagal mengambil daftar DNS", detail: list.errors });
+    }
+
+    // Filter subdomain, buang domain utama
+    const subdomains = list.result.filter(
+      r => r.name !== domain && r.name.endsWith(`.${domain}`)
+    );
+
+    if (subdomains.length === 0) {
+      return res.status(404).json({ status: false, error: "Tidak ada subdomain yang ditemukan" });
+    }
+
+    let deleted = [];
+    for (const record of subdomains) {
+      const del = await fetch(
+        `https://api.cloudflare.com/client/v4/zones/${zoneid}/dns_records/${record.id}`,
+        { method: "DELETE", headers }
+      );
+      const delJson = await del.json();
+      if (delJson.success) {
+        deleted.push(record.name);
+      }
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "Subdomain berhasil dihapus semua",
+      deleted
+    });
+
+  } catch (err) {
+    return res.status(500).json({ status: false, error: "Terjadi kesalahan", detail: err.message });
+  }
+});
 
 };
