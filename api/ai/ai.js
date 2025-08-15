@@ -107,4 +107,4 @@ app.get("/ai/hard", async (req, res) => {
   }
 });
 
-module.exports = app;
+}!;
