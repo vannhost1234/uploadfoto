@@ -25,29 +25,29 @@
       "path": "/ai/gemini?text="
     }
   ],
-  "Payment Geteway": [
+  "Payment Gateway": [
     {
-      "name": "QiosPay - Create Payment",
-      "desc": "Generate QRIS payment via QiosPay",
-      "status": "Active",
+      "name": "QiosPay - Membuat Pembayaran",
+      "desc": "Membuat pembayaran QRIS melalui QiosPay",
+      "status": "Aktif",
       "path": "/payment/createpaymentqios?apikey=&amount=&codeqr="
     },
     {
       "name": "QiosPay - Cek Status",
-      "desc": "Check status of QiosPay payment",
-      "status": "Active",
+      "desc": "Cek status pembayaran QRIS QiosPay",
+      "status": "Aktif",
       "path": "/payment/cekstatusqios?apikey=&merchant=&keyorkut="
     },
     {
-      "name": "OrderKuota - Create Payment",
-      "desc": "Generate QRIS payment via OrderKuota",
-      "status": "Active",
+      "name": "OrderKuota - Membuat Pembayaran",
+      "desc": "Membuat pembayaran QRIS melalui OrderKuota",
+      "status": "Aktif",
       "path": "/payment/createpaymentorkut?apikey=&amount=&codeqr="
     },
     {
       "name": "OrderKuota - Cek Status",
-      "desc": "Check status of OrderKuota payment",
-      "status": "Active",
+      "desc": "Cek status pembayaran QRIS OrderKuota",
+      "status": "Aktif",
       "path": "/payment/cekstatusorkut?apikey=&merchant=&keyorkut="
     }
   ],

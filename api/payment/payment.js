@@ -1,14 +1,13 @@
 const express = require('express');
 const axios = require('axios');
-const fs = require('fs');
-const crypto = require("crypto");
+const crypto = require('crypto');
 const QRCode = require('qrcode');
 const { ImageUploadService } = require('node-upload-images');
 
 const app = express();
 app.use(express.json());
 
-// Helper functions
+// Fungsi Pembantu (Helper Functions)
 function convertCRC16(str) {
     let crc = 0xFFFF;
     const strlen = str.length;
@@ -66,23 +65,28 @@ async function checkQRISStatus(merchant, keyorkut) {
     return latestTransaction || null;
 }
 
-// ====================== QiosPay / OrderKuota Endpoints ======================
-
-// QiosPay: Create Payment
-app.get('/qiospay/createpayment', async (req, res) => {
+// Fungsi untuk membuat pembayaran dan mengirim QRIS
+async function createPayment(req, res, serviceType) {
     const { apikey, amount, codeqr } = req.query;
-    if (!apikey || !amount || !codeqr) return res.status(400).json({ status: false, error: "apikey, amount, codeqr wajib" });
+    if (!apikey || !amount || !codeqr) return res.status(400).json({ status: false, error: `${serviceType} - apikey, amount, codeqr wajib` });
 
     try {
         const qrData = await createQRIS(amount, codeqr);
         res.status(200).json({ status: true, result: qrData });
     } catch (error) {
+        console.error(`${serviceType} payment error:`, error);
         res.status(500).json({ status: false, error: error.message });
     }
-});
+}
 
-// QiosPay: Check Status
-app.get('/qiospay/cekstatus', async (req, res) => {
+// Endpoint QiosPay: Membuat Pembayaran
+app.get('/payment/createpaymentqios', (req, res) => createPayment(req, res, 'QiosPay'));
+
+// Endpoint OrderKuota: Membuat Pembayaran
+app.get('/payment/createpaymentorkut', (req, res) => createPayment(req, res, 'OrderKuota'));
+
+// Endpoint QiosPay: Cek Status Pembayaran
+app.get('/payment/cekstatusqios', async (req, res) => {
     const { merchant, keyorkut, apikey } = req.query;
     if (!apikey || !merchant || !keyorkut) return res.status(400).json({ status: false, error: "apikey, merchant, keyorkut wajib" });
 
@@ -91,28 +95,16 @@ app.get('/qiospay/cekstatus', async (req, res) => {
         if (latestTransaction) {
             res.json({ status: true, result: latestTransaction });
         } else {
-            res.json({ status: false, message: "No transactions found." });
+            res.json({ status: false, message: "Tidak ada transaksi ditemukan." });
         }
     } catch (error) {
+        console.error("Cek status pembayaran error:", error);
         res.status(500).json({ status: false, error: error.message });
     }
 });
 
-// OrderKuota: Create Payment (sama logikanya dengan QiosPay)
-app.get('/orderkuota/createpayment', async (req, res) => {
-    const { apikey, amount, codeqr } = req.query;
-    if (!apikey || !amount || !codeqr) return res.status(400).json({ status: false, error: "apikey, amount, codeqr wajib" });
-
-    try {
-        const qrData = await createQRIS(amount, codeqr);
-        res.status(200).json({ status: true, result: qrData });
-    } catch (error) {
-        res.status(500).json({ status: false, error: error.message });
-    }
-});
-
-// OrderKuota: Check Status
-app.get('/orderkuota/cekstatus', async (req, res) => {
+// Endpoint OrderKuota: Cek Status Pembayaran
+app.get('/payment/cekstatusorkut', async (req, res) => {
     const { merchant, keyorkut, apikey } = req.query;
     if (!apikey || !merchant || !keyorkut) return res.status(400).json({ status: false, error: "apikey, merchant, keyorkut wajib" });
 
@@ -121,11 +113,12 @@ app.get('/orderkuota/cekstatus', async (req, res) => {
         if (latestTransaction) {
             res.json({ status: true, result: latestTransaction });
         } else {
-            res.json({ status: false, message: "No transactions found." });
+            res.json({ status: false, message: "Tidak ada transaksi ditemukan." });
         }
     } catch (error) {
+        console.error("Cek status pembayaran error:", error);
         res.status(500).json({ status: false, error: error.message });
     }
 });
 
-};
+}!;
