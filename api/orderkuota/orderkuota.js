@@ -107,7 +107,7 @@ function generateExpirationTime() {
 
 async function elxyzFile(buffer) {
   const service = new ImageUploadService('pixhost.to');
-  const { directLink } = await service.uploadFromBinary(buffer, 'skyzee.png');
+  const { directLink } = await service.uploadFromBinary(buffer, 'vannhosting.png');
   return directLink;
 }
 

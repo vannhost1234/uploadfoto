@@ -42,7 +42,7 @@ async function elxyzFile(buffer) {
     return new Promise(async (resolve, reject) => {
         try {
 const service = new ImageUploadService('pixhost.to');
-let { directLink } = await service.uploadFromBinary(buffer, 'skyzee.png');
+let { directLink } = await service.uploadFromBinary(buffer, 'vannhosting.png');
             resolve(directLink);
         } catch (error) {
             console.error('🚫 Upload Failed:', error);
