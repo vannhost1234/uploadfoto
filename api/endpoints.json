@@ -25,7 +25,7 @@
       "path": "/ai/gemini?text="
     }
   ],
-  "payment geteway": [
+  "Payment Geteway": [
     {
       "name": "QiosPay - Create Payment",
       "desc": "Generate QRIS payment via QiosPay",
