@@ -17,8 +17,7 @@ const postJSON = (url, data) => {
 // ===== /ai/luminai =====
 app.get("/ai/luminai", async (req, res) => {
   const { text } = req.query;
-  if (!text)
-    return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
+  if (!text) return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
 
   try {
     const response = await postJSON("https://luminai.my.id/api/chat", { content: text });
@@ -35,8 +34,7 @@ app.get("/ai/luminai", async (req, res) => {
 // ===== /ai/bard =====
 app.get("/ai/bard", async (req, res) => {
   const { text } = req.query;
-  if (!text)
-    return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
+  if (!text) return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
 
   try {
     const response = await axios.get(
@@ -56,8 +54,7 @@ app.get("/ai/bard", async (req, res) => {
 // ===== /ai/freegpt =====
 app.get("/ai/freegpt", async (req, res) => {
   const { text } = req.query;
-  if (!text)
-    return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
+  if (!text) return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
 
   try {
     const response = await postJSON("https://chatgpt-clone.fly.dev/api/completion", { message: text });
@@ -74,8 +71,7 @@ app.get("/ai/freegpt", async (req, res) => {
 // ===== /ai/deepseek =====
 app.get("/ai/deepseek", async (req, res) => {
   const { text } = req.query;
-  if (!text)
-    return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
+  if (!text) return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
 
   try {
     const response = await postJSON("https://deepseek.enzzdev.repl.co/api", { text });
@@ -92,8 +88,7 @@ app.get("/ai/deepseek", async (req, res) => {
 // ===== /ai/hard =====
 app.get("/ai/hard", async (req, res) => {
   const { text } = req.query;
-  if (!text)
-    return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
+  if (!text) return res.status(400).json({ status: false, creator: CREATOR, error: "Text is required" });
 
   try {
     const response = await postJSON("https://hardai.enzzdev.repl.co/api", { text });
@@ -107,4 +102,4 @@ app.get("/ai/hard", async (req, res) => {
   }
 });
 
-}!;
+};
