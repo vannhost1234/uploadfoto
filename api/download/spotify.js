@@ -28,8 +28,6 @@ class SpotMate {
       if (!this._token) {
         throw new Error('Token CSRF tidak ditemukan.');
       }
-
-      console.log('Berhasil mendapatkan cookie dan token.');
     } catch (error) {
       throw new Error(`Gagal mengunjungi halaman: ${error.message}`);
     }
@@ -44,11 +42,8 @@ class SpotMate {
       const response = await axios.post(
         'https://spotmate.online/getTrackData',
         { spotify_url: spotifyUrl },
-        {
-          headers: this._getHeaders(),
-        }
+        { headers: this._getHeaders() }
       );
-
       return response.data;
     } catch (error) {
       throw new Error(`Gagal mendapatkan info track: ${error.message}`);
@@ -64,11 +59,8 @@ class SpotMate {
       const response = await axios.post(
         'https://spotmate.online/convert',
         { urls: spotifyUrl },
-        {
-          headers: this._getHeaders(),
-        }
+        { headers: this._getHeaders() }
       );
-
       return response.data;
     } catch (error) {
       throw new Error(`Gagal mengonversi track: ${error.message}`);
@@ -78,7 +70,6 @@ class SpotMate {
   clear() {
     this._cookie = null;
     this._token = null;
-    console.log('Cookie dan token telah dihapus.');
   }
 
   _getHeaders() {
@@ -100,30 +91,32 @@ class SpotMate {
       'x-csrf-token': this._token,
     };
   }
-}  
+}
 
 module.exports = function (app) {
-app.get('/download/spotify', async (req, res) => {
-       const { apikey } = req.query;
-            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
-            const { url } = req.query;
-            if (!url) {
-                return res.json({ status: false, error: 'Url is required' });
-            }
-        try {
-            const spotMate = new SpotMate();
-            const trackInfo = await spotMate.info(url);
-            const convertResult = await spotMate.convert(url);      
-            res.status(200).json({
-                status: true,
-                result: {
-                url: convertResult.url, 
-                title: trackInfo.album.name
-                }
-            });
-            spotMate.clear();          
-        } catch (error) {
-            res.status(500).send(`Error: ${error.message}`);
+  app.get('/download/spotify', async (req, res) => {
+    const { url } = req.query;
+
+    if (!url) {
+      return res.status(400).json({ status: false, error: 'Url is required' });
+    }
+
+    try {
+      const spotMate = new SpotMate();
+      const trackInfo = await spotMate.info(url);
+      const convertResult = await spotMate.convert(url);
+
+      res.status(200).json({
+        status: true,
+        result: {
+          url: convertResult.url,
+          title: trackInfo.album.name
         }
-});
+      });
+
+      spotMate.clear();
+    } catch (error) {
+      res.status(500).json({ status: false, error: error.message });
+    }
+  });
 }

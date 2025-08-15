@@ -6,6 +6,7 @@ async function capcutdl(url) {
         const response = await axios.get(url);
         const html = response.data;
         const $ = cheerio.load(html);
+
         const videoElement = $('video.player-o3g3Ag');
         const videoSrc = videoElement.attr('src');
         const posterSrc = videoElement.attr('poster');
@@ -38,21 +39,26 @@ async function capcutdl(url) {
 }
 
 module.exports = function (app) {
-app.get('/download/capcut', async (req, res) => {
-       const { apikey } = req.query;
-            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
-            const { url } = req.query;
-            if (!url) {
-                return res.json({ status: false, error: 'Url is required' });
-            }
+    app.get('/download/capcut', async (req, res) => {
+        const { url } = req.query;
+
+        if (!url) {
+            return res.status(400).json({ status: false, error: 'Url is required' });
+        }
+
         try {
             const results = await capcutdl(url);
+
+            if (!results) {
+                return res.status(500).json({ status: false, error: 'Gagal mengambil data video.' });
+            }
+
             res.status(200).json({
                 status: true,
                 result: results
             });
         } catch (error) {
-            res.status(500).send(`Error: ${error.message}`);
+            res.status(500).json({ status: false, error: error.message });
         }
-});
+    });
 }

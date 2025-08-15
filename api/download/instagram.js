@@ -20,12 +20,6 @@ async function igdl(url) {
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'x-requested-with': 'XMLHttpRequest',
             'origin': 'https://instanavigation.app',
-            'alt-used': 'instanavigation.app',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-origin',
-            'priority': 'u=0',
-            'te': 'trailers',
         },
         data: data
     };
@@ -44,7 +38,7 @@ async function igdl(url) {
         }
     });
 
-    const urlParams = new URLSearchParams(downloadUrls[0]?.split('?')[1]); // Ambil filename dari URL pertama
+    const urlParams = new URLSearchParams(downloadUrls[0]?.split('?')[1] || '');
     let filename = urlParams.get('filename');
     if (filename && filename.endsWith('.mp4')) {
         filename = filename.slice(0, -4);
@@ -58,13 +52,13 @@ async function igdl(url) {
 }
 
 module.exports = function (app) {
-app.get('/download/instagram', async (req, res) => {
-       const { apikey } = req.query;
-            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
-       const { url } = req.query;
-            if (!url) {
- return res.json({ status: false, error: 'Url is required' });
-            }
+    app.get('/download/instagram', async (req, res) => {
+        const { url } = req.query;
+
+        if (!url) {
+            return res.status(400).json({ status: false, error: 'Url is required' });
+        }
+
         try {
             const results = await igdl(url);
             res.status(200).json({
@@ -72,7 +66,7 @@ app.get('/download/instagram', async (req, res) => {
                 result: results
             });
         } catch (error) {
-            res.status(500).send(`Error: ${error.message}`);
+            res.status(500).json({ status: false, error: error.message });
         }
-});
+    });
 }
