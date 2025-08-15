@@ -25,16 +25,28 @@
       "path": "/ai/gemini?text="
     }
   ],
-  "orderkuota": [
+  "payment geteway": [
     {
-      "name": "Create Payment",
-      "desc": "Create qris payment",
+      "name": "QiosPay - Create Payment",
+      "desc": "Generate QRIS payment via QiosPay",
+      "status": "Active",
+      "path": "/qiospay/createpayment?apikey=&amount=&codeqr="
+    },
+    {
+      "name": "QiosPay - Cek Status",
+      "desc": "Check status of QiosPay payment",
+      "status": "Active",
+      "path": "/qiospay/cekstatus?apikey=&merchant=&keyorkut="
+    },
+    {
+      "name": "OrderKuota - Create Payment",
+      "desc": "Generate QRIS payment via OrderKuota",
       "status": "Active",
       "path": "/orderkuota/createpayment?apikey=&amount=&codeqr="
     },
     {
-      "name": "Cek Status",
-      "desc": "Cek status payment",
+      "name": "OrderKuota - Cek Status",
+      "desc": "Check status of OrderKuota payment",
       "status": "Active",
       "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut="
     }
