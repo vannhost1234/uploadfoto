@@ -30,25 +30,25 @@
       "name": "QiosPay - Create Payment",
       "desc": "Generate QRIS payment via QiosPay",
       "status": "Active",
-      "path": "/payment/createpayment?apikey=&amount=&codeqr="
+      "path": "/payment/createpaymentqios?apikey=&amount=&codeqr="
     },
     {
       "name": "QiosPay - Cek Status",
       "desc": "Check status of QiosPay payment",
       "status": "Active",
-      "path": "/payment/cekstatus?apikey=&merchant=&keyorkut="
+      "path": "/payment/cekstatusqios?apikey=&merchant=&keyorkut="
     },
     {
       "name": "OrderKuota - Create Payment",
       "desc": "Generate QRIS payment via OrderKuota",
       "status": "Active",
-      "path": "/payment/createpayment?apikey=&amount=&codeqr="
+      "path": "/payment/createpaymentorkut?apikey=&amount=&codeqr="
     },
     {
       "name": "OrderKuota - Cek Status",
       "desc": "Check status of OrderKuota payment",
       "status": "Active",
-      "path": "/payment/cekstatus?apikey=&merchant=&keyorkut="
+      "path": "/payment/cekstatusorkut?apikey=&merchant=&keyorkut="
     }
   ],
   "pterodactyl": [
