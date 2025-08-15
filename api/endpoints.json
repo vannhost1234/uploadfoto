@@ -27,30 +27,48 @@
   ],
   "Payment Gateway": [
     {
-      "name": "QiosPay - Membuat Pembayaran",
-      "desc": "Membuat pembayaran QRIS melalui QiosPay",
-      "status": "Aktif",
-      "path": "/payment/createpaymentqios?apikey=&amount=&codeqr="
+      "name": "Cek Mutasi Qris Orderkuota",
+      "desc": "Cek Mutasi Qris Orderkuota",
+      "status": "Active",
+      "path": "/orderkuota/mutasiqr?apikey=&username=&token="
     },
     {
-      "name": "QiosPay - Cek Status",
-      "desc": "Cek status pembayaran QRIS QiosPay",
-      "status": "Aktif",
-      "path": "/payment/cekstatusqios?apikey=&merchant=&keyorkut="
+      "name": "Cek Profile Orderkuota",
+      "desc": "Cek Profile Orderkuota",
+      "status": "Active",
+      "path": "/orderkuota/profile?apikey=&username=&token="
     },
     {
-      "name": "OrderKuota - Membuat Pembayaran",
-      "desc": "Membuat pembayaran QRIS melalui OrderKuota",
-      "status": "Aktif",
-      "path": "/payment/createpaymentorkut?apikey=&amount=&codeqr="
+      "name": "Create Qris Orderkuota",
+      "desc": "Create Qris Orderkuota",
+      "status": "Active",
+      "path": "/orderkuota/createpayment?apikey=&amount=&codeqr="
     },
     {
-      "name": "OrderKuota - Cek Status",
-      "desc": "Cek status pembayaran QRIS OrderKuota",
-      "status": "Aktif",
-      "path": "/payment/cekstatusorkut?apikey=&merchant=&keyorkut="
-    }
-  ],
+      "name": "Get OTP Orderkuota",
+      "desc": "Get OTP Orderkuota",
+      "status": "Active",
+      "path": "/orderkuota/getotp?apikey=&username=&password="
+    },
+    {
+      "name": "Get Token Orderkuota",
+      "desc": "Get Token Orderkuota",
+      "status": "Active",
+      "path": "/orderkuota/gettoken?apikey=&username=&otp="
+    },
+    {
+      "name": "Create Payment QiosPay",
+      "desc": "Create qris QiosPay",
+      "status": "Active",
+      "path": "/qiospay/createpayment?apikey=&amount=&codeqr="
+    },
+    {
+      "name": "Cek Status QiosPay",
+      "desc": "Cek status QiosPay",
+      "status": "Active",
+      "path": "/qiospay/cekstatus?apikey=&merchant=&keyqiospay="
+     }
+   ],
   "pterodactyl": [
     {
       "name": "Create Panel",
