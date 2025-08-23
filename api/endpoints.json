@@ -127,49 +127,6 @@
       "path": "/cloudflare/delete-all-subdomain?zoneid=&token=&domain="
     }
   ],
-  "uploadfoto": [
-    {
-      "name": "Upload Foto",
-      "desc": "Endpoint untuk mengunggah foto ke server",
-      "status": "Active",
-      "path": "/upfoto/upload",
-      "method": "POST",
-      "params": {
-        "file": "File gambar yang diunggah (form-data)"
-      },
-      "response": {
-        "success": true,
-        "url": "https://domainkamu.vercel.app/uploads/namafile.jpg"
-      }
-    },
-    {
-      "name": "Hapus Foto",
-      "desc": "Endpoint untuk menghapus foto yang sudah diunggah",
-      "status": "Active",
-      "path": "/upfoto/delete",
-      "method": "DELETE",
-      "params": {
-        "filename": "Nama file yang ingin dihapus"
-      },
-      "response": {
-        "success": true,
-        "message": "File berhasil dihapus"
-      }
-    },
-    {
-      "name": "List Foto",
-      "desc": "Endpoint untuk melihat semua foto yang sudah diunggah",
-      "status": "Active",
-      "path": "/upfoto/list",
-      "method": "GET",
-      "params": {},
-      "response": {
-        "success": true,
-        "files": [
-          "https://domainkamu.vercel.app/uploads/foto1.jpg",
-          "https://domainkamu.vercel.app/uploads/foto2.png"
-      }
-    ],
   "downloader": [
     {
       "name": "Tiktok",
