@@ -1,28 +1,24 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).send('Method not allowed');
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
   const { name, content } = req.body;
-  const token = process.env.GITHUB_TOKEN;
 
-  const base64 = content.split(',')[1]; // ambil data base64 asli
-  const repo = "vannhost1234/uploadfoto";
-  const path = `images/${Date.now()}-${name}`;
-
-  const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+  const response = await fetch(`https://api.github.com/repos/vannhost1234/uploadfoto/contents/images/${name}`, {
     method: 'PUT',
     headers: {
-      Authorization: `token ${token}`,
+      Authorization: `token ${process.env.GITHUB_TOKEN}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       message: `Upload ${name}`,
-      content: base64
+      content: content.split(',')[1]
     })
   });
 
   const data = await response.json();
-  if (response.status === 201) {
-    return res.status(200).json({ url: data.content.download_url });
+  if (response.ok) {
+    res.status(200).json({ url: data.content.html_url });
   } else {
-    return res.status(response.status).send(JSON.stringify(data));
+    res.status(response.status).json(data);
   }
 }
