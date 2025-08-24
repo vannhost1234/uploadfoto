@@ -1,197 +1,103 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foto Manager</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foto Manager</title>
+  <style>
     body {
-        margin: 0;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background: linear-gradient(135deg, #4e54c8, #8f94fb);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        color: #fff;
+      margin: 0; font-family: Arial, sans-serif;
+      background: linear-gradient(135deg,#1a1c3a,#2a2d5a);
+      color: white; text-align: center; padding: 40px;
     }
     .container {
-        background: rgba(255,255,255,0.1);
-        padding: 20px;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        width: 100%;
-        max-width: 900px;
-        animation: fadeIn 0.8s ease-in-out;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 2rem;
-        color: #fff;
-    }
-    .upload-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+      max-width: 600px; margin: auto; background: rgba(255,255,255,0.1);
+      padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);
     }
     input[type="file"] {
-        background: #fff;
-        padding: 10px;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 300px;
-        cursor: pointer;
+      margin: 15px 0; padding: 10px; border: 2px dashed #888;
+      border-radius: 10px; width: 100%;
     }
-    .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        color: #fff;
-        transition: 0.3s;
+    button {
+      background: linear-gradient(90deg,#5b6bff,#8f56ff);
+      color: white; padding: 12px 20px; border: none;
+      border-radius: 8px; cursor: pointer; margin: 5px;
     }
-    .btn-upload {
-        background: linear-gradient(45deg, #00dbde, #fc00ff);
+    button:hover { opacity: 0.85; }
+    .photo-list img {
+      max-width: 120px; margin: 10px; border-radius: 10px; display: block;
     }
-    .btn-upload:hover {
-        transform: scale(1.05);
-        opacity: 0.9;
+    .photo-item {
+      display: inline-block; margin: 10px; text-align: center;
     }
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 15px;
+    .photo-item button {
+      display: block; margin-top: 5px; width: 120px;
     }
-    .card {
-        background: rgba(255,255,255,0.15);
-        border-radius: 15px;
-        padding: 10px;
-        text-align: center;
-        transition: 0.3s;
-    }
-    .card:hover {
-        transform: scale(1.03);
-        background: rgba(255,255,255,0.2);
-    }
-    .card img {
-        max-width: 100%;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .btn-copy {
-        background: linear-gradient(45deg, #11998e, #38ef7d);
-        margin-right: 5px;
-    }
-    .btn-delete {
-        background: linear-gradient(45deg, #ff416c, #ff4b2b);
-    }
-    .btn-copy:hover, .btn-delete:hover {
-        transform: scale(1.05);
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-</style>
+  </style>
 </head>
 <body>
-<div class="container">
-    <h1>📂 Foto Manager</h1>
-    <div class="upload-box">
-        <input type="file" id="fileInput" accept="image/*">
-        <button class="btn btn-upload" onclick="uploadImage()">🚀 Upload Foto</button>
-    </div>
-    <div class="gallery" id="gallery"></div>
-</div>
+  <div class="container">
+    <h1>Foto Manager</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadPhoto()">Upload Foto</button>
+
+    <h2>Daftar Foto</h2>
+    <div class="photo-list" id="photoList"></div>
+  </div>
 
 <script>
-const GITHUB_USERNAME = "vannhost1234";
-const GITHUB_REPO = "uploadfoto";
-
-async function uploadImage() {
-    const file = document.getElementById('fileInput').files[0];
-    if (!file) return alert("Pilih foto dulu!");
-
-    if (!file.type.match(/image\/(jpeg|png|gif|webp)/)) {
-        return alert("Hanya mendukung file gambar (.jpg, .jpeg, .png, .gif, .webp)");
-    }
-
-    const base64 = await toBase64(file);
-    const fileName = `${Date.now()}-${file.name}`;
-
+async function uploadPhoto() {
+  const file = document.getElementById('fileInput').files[0];
+  if (!file) return alert("Pilih foto dulu!");
+  const reader = new FileReader();
+  reader.onload = async () => {
     const response = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: fileName, content: base64 })
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name: file.name, content: reader.result })
     });
-
     if (response.ok) {
-        alert("✅ Foto berhasil diupload!");
-        loadPhotos();
+      alert("Foto berhasil diupload!");
+      loadPhotos();
     } else {
-        const err = await response.text();
-        alert("❌ Gagal upload: " + err);
+      const err = await response.text();
+      alert("Gagal upload: " + err);
     }
-}
-
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = error => reject(error);
-    });
+  };
+  reader.readAsDataURL(file);
 }
 
 async function loadPhotos() {
-    const res = await fetch('/api/list');
-    const files = await res.json();
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = '';
-    files.forEach(file => {
-        const url = `https://cdn.jsdelivr.net/gh/${GITHUB_USERNAME}/${GITHUB_REPO}@main/images/${file}`;
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${url}" alt="${file}">
-            <div>
-                <button class="btn btn-copy" onclick="copyLink('${url}')">📋 Salin</button>
-                <button class="btn btn-delete" onclick="deletePhoto('${file}')">🗑 Hapus</button>
-            </div>
-        `;
-        gallery.appendChild(card);
-    });
+  const res = await fetch('/api/list');
+  const photos = await res.json();
+  const list = document.getElementById('photoList');
+  list.innerHTML = '';
+  photos.forEach(photo => {
+    const div = document.createElement('div');
+    div.className = 'photo-item';
+    div.innerHTML = `
+      <img src="${photo.url}" alt="${photo.name}">
+      <button onclick="copyLink('${photo.url}')">Salin Link</button>
+      <button onclick="deletePhoto('${photo.name}')">Hapus</button>
+    `;
+    list.appendChild(div);
+  });
 }
 
-function copyLink(link) {
-    navigator.clipboard.writeText(link);
-    alert("✅ Link disalin:\n" + link);
+async function deletePhoto(name) {
+  if (!confirm("Yakin hapus foto ini?")) return;
+  const res = await fetch('/api/delete', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ name })
+  });
+  if (res.ok) loadPhotos();
+  else alert("Gagal hapus!");
 }
 
-async function deletePhoto(fileName) {
-    if (!confirm("Yakin mau hapus foto ini?")) return;
-
-    const response = await fetch('/api/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: fileName })
-    });
-
-    if (response.ok) {
-        alert("✅ Foto dihapus!");
-        loadPhotos();
-    } else {
-        const err = await response.text();
-        alert("❌ Gagal hapus: " + err);
-    }
+function copyLink(url) {
+  navigator.clipboard.writeText(url);
+  alert("Link disalin!");
 }
 
 loadPhotos();
