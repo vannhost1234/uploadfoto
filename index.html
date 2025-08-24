@@ -6,32 +6,94 @@
   <title>Foto Manager</title>
   <style>
     body {
-      margin: 0; font-family: Arial, sans-serif;
-      background: linear-gradient(135deg,#1a1c3a,#2a2d5a);
-      color: white; text-align: center; padding: 40px;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg,#141625,#2b2e4a);
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
     .container {
-      max-width: 600px; margin: auto; background: rgba(255,255,255,0.1);
-      padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255,255,255,0.08);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      animation: fadeIn 0.8s ease-out;
+    }
+    h1, h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
     }
     input[type="file"] {
-      margin: 15px 0; padding: 10px; border: 2px dashed #888;
-      border-radius: 10px; width: 100%;
+      margin: 20px 0;
+      padding: 12px;
+      border: 2px dashed rgba(255,255,255,0.3);
+      border-radius: 12px;
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      color: #ddd;
+      transition: all 0.3s ease;
+    }
+    input[type="file"]:hover {
+      border-color: #8f56ff;
+      background: rgba(255,255,255,0.1);
     }
     button {
       background: linear-gradient(90deg,#5b6bff,#8f56ff);
-      color: white; padding: 12px 20px; border: none;
-      border-radius: 8px; cursor: pointer; margin: 5px;
+      color: white;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 8px 5px;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 6px 15px rgba(95, 99, 255, 0.4);
+      transition: all 0.3s ease;
     }
-    button:hover { opacity: 0.85; }
-    .photo-list img {
-      max-width: 120px; margin: 10px; border-radius: 10px; display: block;
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(143, 86, 255, 0.6);
+    }
+    .photo-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 25px;
+      gap: 20px;
     }
     .photo-item {
-      display: inline-block; margin: 10px; text-align: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 12px;
+      width: 140px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
     }
-    .photo-item button {
-      display: block; margin-top: 5px; width: 120px;
+    .photo-item:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+    .photo-item img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+    .photo-item img:hover {
+      transform: scale(1.05);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -84,15 +146,14 @@ async function loadPhotos() {
   });
 }
 
-async function deletePhoto(name) {
-  if (!confirm("Yakin hapus foto ini?")) return;
-  const res = await fetch('/api/delete', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ name })
-  });
-  if (res.ok) loadPhotos();
-  else alert("Gagal hapus!");
+async function deletePhoto(fileName) {
+  const response = await fetch(`/api/delete?name=${fileName}`, { method: 'DELETE' });
+  if (response.ok) {
+    alert('Foto berhasil dihapus!');
+    loadPhotos();
+  } else {
+    alert('Gagal hapus foto!');
+  }
 }
 
 function copyLink(url) {
