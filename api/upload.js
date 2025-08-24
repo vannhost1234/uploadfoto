@@ -1,18 +1,19 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });
+  if (req.method !== 'POST') return res.status(405).send('Method not allowed');
 
   const { name, content } = req.body;
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const REPO_OWNER = "vannhostq234"; // ganti
-  const REPO_NAME = "uploadfoto";      // ganti
-  const BRANCH = "main";
-  const FOLDER_PATH = "images";
+  if (!name || !content) return res.status(400).send('Invalid data');
 
-  const upload = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FOLDER_PATH}/${name}`, {
-    method: "PUT",
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const GITHUB_USERNAME = "vannhost1234";
+  const GITHUB_REPO = "uploadfoto";
+  const filePath = `images/${name}`;
+
+  const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${filePath}`, {
+    method: 'PUT',
     headers: {
-      "Authorization": `token ${GITHUB_TOKEN}`,
-      "Content-Type": "application/json"
+      'Authorization': `token ${GITHUB_TOKEN}`,
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       message: `Upload ${name}`,
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
     })
   });
 
-  const result = await upload.json();
-  res.status(upload.status).json(result);
+  const data = await response.json();
+  if (!response.ok) return res.status(response.status).send(JSON.stringify(data));
+  res.status(200).json({ success: true, file: name });
 }
